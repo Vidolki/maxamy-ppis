@@ -1,1982 +1,2109 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Maxamy Pre-Purchase Inspection</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #fafafa;
-            padding: 0;
-            line-height: 1.6;
-            overflow-x: hidden;
-            color: #333;
-        }
+```
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Poppins', sans-serif;
-        }
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            min-height: 100vh;
-            box-shadow: 0 0 20px rgba(0,0,0,0.05);
-        }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #fafafa;
+        padding: 0;
+        line-height: 1.6;
+        overflow-x: hidden;
+        color: #333;
+    }
 
-        .header {
-            background: #1d1d1f;
-            color: #FA8700;
-            padding: 20px 20px 25px 20px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Poppins', sans-serif;
+    }
 
-        .header-logo {
-            max-width: 280px;
-            width: 100%;
-            height: auto;
-            margin-bottom: 8px;
-        }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        min-height: 100vh;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
 
+    .header {
+        background: #1d1d1f;
+        color: #FA8700;
+        padding: 20px 20px 25px 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .header-logo {
+        max-width: 280px;
+        width: 100%;
+        height: auto;
+        margin-bottom: 8px;
+    }
+
+    .header h1 {
+        font-size: 19px;
+        margin: 0;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+        color: #FA8700;
+    }
+
+    .new-inspection-btn {
+        margin-top: 8px;
+        padding: 9px 18px;
+        background: #FA8700;
+        color: white;
+        border: 2px solid #FA8700;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 13px;
+        font-family: 'Poppins', sans-serif;
+        transition: all 0.2s;
+    }
+
+    .new-inspection-btn:hover {
+        background: #ff9e33;
+        border-color: #ff9e33;
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(250, 135, 0, 0.3);
+    }
+
+    .new-inspection-btn:active {
+        transform: scale(0.98);
+    }
+
+    .basic-info {
+        background: #fff;
+        padding: 18px 20px;
+        border-bottom: 1px solid #e8e8e8;
+    }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #2a2a2a;
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 13px 15px;
+        border: 1px solid #d4d4d4;
+        border-radius: 6px;
+        font-size: 15px;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.2s;
+        background: white;
+    }
+
+    /* Fix date input to match other inputs - removes browser default styling */
+    .form-group input[type="date"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding: 13px 15px !important;
+        height: auto;
+        line-height: 1.6;
+        min-height: unset;
+        box-sizing: border-box;
+    }
+
+    /* Additional iOS Safari specific fix */
+    .form-group input[type="date"]::-webkit-date-and-time-value {
+        text-align: left;
+        padding: 0;
+        margin: 0;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #FA8700;
+        box-shadow: 0 0 0 3px rgba(250, 135, 0, 0.08);
+    }
+
+    .inspection-type-selector {
+        background: #fff9f3;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #ffe4cc;
+    }
+
+    .inspection-type-selector label {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        color: #333;
+        font-size: 15px;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .inspection-type-selector select {
+        border: 2px solid #FA8700;
+        font-weight: 600;
+    }
+
+    .inspection-level-info {
+        margin-top: 12px;
+        padding: 11px;
+        background: white;
+        border-radius: 5px;
+        font-size: 13px;
+        color: #666;
+        border-left: 3px solid #FA8700;
+    }
+
+    .section-accordion {
+        border-bottom: 1px solid #ececec;
+        background: white;
+    }
+
+    .section-header {
+        background: #f8f8f8;
+        color: #2a2a2a;
+        padding: 17px 20px;
+        font-weight: 600;
+        font-size: 15px;
+        font-family: 'Poppins', sans-serif;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        user-select: none;
+        transition: background 0.2s;
+        border-left: 3px solid transparent;
+    }
+
+    .section-header:hover {
+        background: #f2f2f2;
+    }
+
+    .section-header.active {
+        background: #fff;
+        border-left-color: #FA8700;
+    }
+
+    .section-header .counter {
+        font-size: 12px;
+        background: #e8e8e8;
+        color: #666;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-weight: 600;
+    }
+
+    .section-header.active .counter {
+        background: #FA8700;
+        color: white;
+    }
+
+    .section-header .arrow {
+        font-size: 18px;
+        color: #999;
+        transition: transform 0.3s;
+    }
+
+    .section-header.active .arrow {
+        transform: rotate(180deg);
+        color: #FA8700;
+    }
+
+    .section-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        background: white;
+    }
+
+    .section-content.active {
+        max-height: 10000px;
+        transition: max-height 0.5s ease-in;
+    }
+
+    .inspection-item {
+        padding: 18px 20px;
+        border-bottom: 1px solid #f5f5f5;
+        background: white;
+    }
+
+    .inspection-item:last-child {
+        border-bottom: none;
+    }
+
+    .item-name {
+        font-weight: 600;
+        color: #2a2a2a;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
+    .condition-buttons {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 7px;
+        margin-bottom: 13px;
+    }
+
+    .condition-btn {
+        padding: 11px 8px;
+        border: 2px solid #e0e0e0;
+        background: white;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        transition: all 0.15s;
+        text-align: center;
+        font-family: 'Inter', sans-serif;
+        color: #666;
+    }
+
+    .condition-btn:active {
+        transform: scale(0.97);
+    }
+
+    .condition-btn.selected {
+        border-width: 2px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+
+    .condition-btn.excellent.selected {
+        background: #10b981;
+        border-color: #10b981;
+        color: white;
+    }
+
+    .condition-btn.good.selected {
+        background: #3b82f6;
+        border-color: #3b82f6;
+        color: white;
+    }
+
+    .condition-btn.fair.selected {
+        background: #f59e0b;
+        border-color: #f59e0b;
+        color: white;
+    }
+
+    .condition-btn.poor.selected {
+        background: #ef4444;
+        border-color: #ef4444;
+        color: white;
+    }
+
+    .condition-btn.na.selected {
+        background: #6b7280;
+        border-color: #6b7280;
+        color: white;
+    }
+
+    .notes-area {
+        width: 100%;
+        min-height: 65px;
+        margin-bottom: 12px;
+        resize: vertical;
+        border-radius: 6px;
+        border: 1px solid #d4d4d4;
+        padding: 11px;
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        background: #fafafa;
+    }
+
+    .notes-area:focus {
+        border-color: #FA8700;
+        outline: none;
+        background: white;
+    }
+
+    .image-upload-section {
+        margin-top: 13px;
+    }
+
+    .upload-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 11px 16px;
+        background: #fff;
+        border: 1px dashed #c4c4c4;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        color: #666;
+        transition: all 0.2s;
+        font-weight: 500;
+    }
+
+    .upload-btn:hover {
+        border-color: #FA8700;
+        color: #FA8700;
+        background: #fff9f3;
+    }
+
+    .upload-btn:active {
+        transform: scale(0.98);
+    }
+
+    .image-preview {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .image-preview-item {
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%;
+        border-radius: 6px;
+        overflow: hidden;
+        border: 1px solid #e5e5e5;
+        background: #f9f9f9;
+    }
+
+    .image-preview-item img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .remove-image {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(239, 68, 68, 0.95);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 26px;
+        height: 26px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        font-weight: 700;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    .action-buttons {
+        position: sticky;
+        bottom: 0;
+        background: white;
+        padding: 12px 15px;
+        border-top: 1px solid #e8e8e8;
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+        z-index: 100;
+    }
+
+    .btn {
+        padding: 12px 16px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: 'Poppins', sans-serif;
+        letter-spacing: -0.2px;
+        white-space: nowrap;
+    }
+
+    @media (max-width: 600px) {
+        .btn {
+            padding: 11px 12px;
+            font-size: 13px;
+        }
+    }
+
+    .btn:active {
+        transform: scale(0.98);
+    }
+
+    .btn-primary {
+        background: #FA8700;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #e07800;
+    }
+
+    .btn-secondary {
+        background: #f5f5f5;
+        color: #333;
+        border: 1px solid #d4d4d4;
+    }
+
+    .btn-secondary:hover {
+        background: #ececec;
+    }
+
+    .btn-success {
+        background: #10b981;
+        color: white;
+        flex: 1.5;
+    }
+
+    .btn-secondary {
+        flex: 1;
+    }
+
+    .btn-success:hover {
+        background: #059669;
+    }
+
+    .additional-notes-section {
+        background: #fff;
+        padding: 20px;
+        border-top: 2px solid #FA8700;
+        margin-bottom: 80px;
+    }
+
+    .additional-notes-section h3 {
+        font-size: 16px;
+        color: #2a2a2a;
+        margin-bottom: 12px;
+        font-weight: 600;
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    .checkbox-group label {
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .additional-notes-textarea {
+        width: 100%;
+        min-height: 120px;
+        padding: 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        resize: vertical;
+        transition: border-color 0.2s;
+    }
+
+    .additional-notes-textarea:focus {
+        outline: none;
+        border-color: #FA8700;
+    }
+
+    .additional-notes-textarea:disabled {
+        background: #f5f5f5;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    .progress-bar {
+        height: 4px;
+        background: #f0f0f0;
+        position: sticky;
+        top: 0;
+        z-index: 200;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: #FA8700;
+        transition: width 0.4s ease;
+    }
+
+    .storage-indicator {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        z-index: 201;
+        display: none;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .storage-indicator.show {
+        display: flex;
+    }
+
+    .storage-indicator.warning {
+        background: rgba(255, 243, 205, 0.95);
+        border: 1px solid #f59e0b;
+        color: #92400e;
+    }
+
+    .storage-indicator.critical {
+        background: rgba(254, 226, 226, 0.95);
+        border: 1px solid #ef4444;
+        color: #991b1b;
+    }
+
+    .storage-indicator .storage-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10b981;
+    }
+
+    .storage-indicator.warning .storage-dot {
+        background: #f59e0b;
+    }
+
+    .storage-indicator.critical .storage-dot {
+        background: #ef4444;
+    }
+
+    .toast {
+        position: fixed;
+        bottom: 90px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #2a2a2a;
+        color: white;
+        padding: 13px 26px;
+        border-radius: 8px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        z-index: 1000;
+        display: none;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .toast.show {
+        display: block;
+        animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateX(-50%) translateY(20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    .expand-collapse-all {
+        display: flex;
+        gap: 10px;
+        padding: 15px 20px;
+        background: #fafafa;
+        border-bottom: 1px solid #ececec;
+    }
+
+    .expand-collapse-btn {
+        flex: 1;
+        padding: 11px;
+        border: 1px solid #d4d4d4;
+        background: white;
+        color: #666;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all 0.2s;
+    }
+
+    .expand-collapse-btn:hover {
+        background: #f5f5f5;
+        border-color: #FA8700;
+        color: #FA8700;
+    }
+
+    .expand-collapse-btn:active {
+        transform: scale(0.98);
+    }
+
+    @media (max-width: 600px) {
         .header h1 {
-            font-size: 19px;
-            margin: 0;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            color: #FA8700;
-        }
-
-        .new-inspection-btn {
-            margin-top: 8px;
-            padding: 9px 18px;
-            background: #FA8700;
-            color: white;
-            border: 2px solid #FA8700;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 13px;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.2s;
-        }
-
-        .new-inspection-btn:hover {
-            background: #ff9e33;
-            border-color: #ff9e33;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(250, 135, 0, 0.3);
-        }
-
-        .new-inspection-btn:active {
-            transform: scale(0.98);
-        }
-
-        .basic-info {
-            background: #fff;
-            padding: 18px 20px;
-            border-bottom: 1px solid #e8e8e8;
-        }
-
-        .form-group {
-            margin-bottom: 14px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #2a2a2a;
-            font-size: 14px;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 13px 15px;
-            border: 1px solid #d4d4d4;
-            border-radius: 6px;
-            font-size: 15px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
-            background: white;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #FA8700;
-            box-shadow: 0 0 0 3px rgba(250, 135, 0, 0.08);
-        }
-
-        .inspection-type-selector {
-            background: #fff9f3;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #ffe4cc;
-        }
-
-        .inspection-type-selector label {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            color: #333;
-            font-size: 15px;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .inspection-type-selector select {
-            border: 2px solid #FA8700;
-            font-weight: 600;
-        }
-
-        .inspection-level-info {
-            margin-top: 12px;
-            padding: 11px;
-            background: white;
-            border-radius: 5px;
-            font-size: 13px;
-            color: #666;
-            border-left: 3px solid #FA8700;
-        }
-
-        .section-accordion {
-            border-bottom: 1px solid #ececec;
-            background: white;
-        }
-
-        .section-header {
-            background: #f8f8f8;
-            color: #2a2a2a;
-            padding: 17px 20px;
-            font-weight: 600;
-            font-size: 15px;
-            font-family: 'Poppins', sans-serif;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            user-select: none;
-            transition: background 0.2s;
-            border-left: 3px solid transparent;
-        }
-
-        .section-header:hover {
-            background: #f2f2f2;
-        }
-
-        .section-header.active {
-            background: #fff;
-            border-left-color: #FA8700;
-        }
-
-        .section-header .counter {
-            font-size: 12px;
-            background: #e8e8e8;
-            color: #666;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-weight: 600;
-        }
-
-        .section-header.active .counter {
-            background: #FA8700;
-            color: white;
-        }
-
-        .section-header .arrow {
             font-size: 18px;
-            color: #999;
-            transition: transform 0.3s;
-        }
-
-        .section-header.active .arrow {
-            transform: rotate(180deg);
-            color: #FA8700;
-        }
-
-        .section-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background: white;
-        }
-
-        .section-content.active {
-            max-height: 10000px;
-            transition: max-height 0.5s ease-in;
-        }
-
-        .inspection-item {
-            padding: 18px 20px;
-            border-bottom: 1px solid #f5f5f5;
-            background: white;
-        }
-
-        .inspection-item:last-child {
-            border-bottom: none;
-        }
-
-        .item-name {
-            font-weight: 600;
-            color: #2a2a2a;
-            margin-bottom: 12px;
-            font-size: 14px;
         }
 
         .condition-buttons {
-            display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 7px;
-            margin-bottom: 13px;
+            gap: 6px;
         }
 
         .condition-btn {
-            padding: 11px 8px;
-            border: 2px solid #e0e0e0;
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.15s;
-            text-align: center;
-            font-family: 'Inter', sans-serif;
-            color: #666;
+            padding: 10px 6px;
+            font-size: 11px;
         }
+    }
 
-        .condition-btn:active {
-            transform: scale(0.97);
-        }
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.85);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        flex-direction: column;
+        gap: 20px;
+    }
 
-        .condition-btn.selected {
-            border-width: 2px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-        }
+    .loading-overlay.active {
+        display: flex;
+    }
 
-        .condition-btn.excellent.selected {
-            background: #10b981;
-            border-color: #10b981;
-            color: white;
-        }
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #FA8700;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+    }
 
-        .condition-btn.good.selected {
-            background: #3b82f6;
-            border-color: #3b82f6;
-            color: white;
-        }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 
-        .condition-btn.fair.selected {
-            background: #f59e0b;
-            border-color: #f59e0b;
-            color: white;
-        }
+    .loading-text {
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+    }
 
-        .condition-btn.poor.selected {
-            background: #ef4444;
-            border-color: #ef4444;
-            color: white;
-        }
+    /* PDF Preview Modal */
+    .pdf-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        padding: 20px;
+    }
 
-        .condition-btn.na.selected {
-            background: #6b7280;
-            border-color: #6b7280;
-            color: white;
-        }
+    .pdf-modal.active {
+        display: flex;
+    }
 
-        .notes-area {
-            width: 100%;
-            min-height: 65px;
-            margin-bottom: 12px;
-            resize: vertical;
-            border-radius: 6px;
-            border: 1px solid #d4d4d4;
-            padding: 11px;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            background: #fafafa;
-        }
+    .pdf-content {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        max-width: 600px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
 
-        .notes-area:focus {
-            border-color: #FA8700;
-            outline: none;
-            background: white;
-        }
+    .pdf-content h2 {
+        color: #FA8700;
+        margin-bottom: 20px;
+        text-align: center;
+    }
 
-        .image-upload-section {
-            margin-top: 13px;
-        }
+    .pdf-preview-text {
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+        max-height: 400px;
+        overflow-y: auto;
+        font-size: 13px;
+        line-height: 1.8;
+    }
 
-        .upload-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 11px 16px;
-            background: #fff;
-            border: 1px dashed #c4c4c4;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            color: #666;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
+    .pdf-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
 
-        .upload-btn:hover {
-            border-color: #FA8700;
-            color: #FA8700;
-            background: #fff9f3;
-        }
+    .pdf-actions button {
+        flex: 1;
+    }
+</style>
+```
 
-        .upload-btn:active {
-            transform: scale(0.98);
-        }
-
-        .image-preview {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .image-preview-item {
-            position: relative;
-            width: 100%;
-            padding-bottom: 100%;
-            border-radius: 6px;
-            overflow: hidden;
-            border: 1px solid #e5e5e5;
-            background: #f9f9f9;
-        }
-
-        .image-preview-item img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .remove-image {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(239, 68, 68, 0.95);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 26px;
-            height: 26px;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-            font-weight: 700;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-        }
-
-        .action-buttons {
-            position: sticky;
-            bottom: 0;
-            background: white;
-            padding: 12px 15px;
-            border-top: 1px solid #e8e8e8;
-            display: flex;
-            flex-direction: row;
-            gap: 8px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
-            z-index: 100;
-        }
-
-        .btn {
-            padding: 12px 16px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Poppins', sans-serif;
-            letter-spacing: -0.2px;
-            white-space: nowrap;
-        }
-
-        @media (max-width: 600px) {
-            .btn {
-                padding: 11px 12px;
-                font-size: 13px;
-            }
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        .btn-primary {
-            background: #FA8700;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #e07800;
-        }
-
-        .btn-secondary {
-            background: #f5f5f5;
-            color: #333;
-            border: 1px solid #d4d4d4;
-        }
-
-        .btn-secondary:hover {
-            background: #ececec;
-        }
-
-        .btn-success {
-            background: #10b981;
-            color: white;
-            flex: 1.5;
-        }
-
-        .btn-secondary {
-            flex: 1;
-        }
-
-        .btn-success:hover {
-            background: #059669;
-        }
-
-        .additional-notes-section {
-            background: #fff;
-            padding: 20px;
-            border-top: 2px solid #FA8700;
-            margin-bottom: 80px;
-        }
-
-        .additional-notes-section h3 {
-            font-size: 16px;
-            color: #2a2a2a;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .checkbox-group label {
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .additional-notes-textarea {
-            width: 100%;
-            min-height: 120px;
-            padding: 12px;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            resize: vertical;
-            transition: border-color 0.2s;
-        }
-
-        .additional-notes-textarea:focus {
-            outline: none;
-            border-color: #FA8700;
-        }
-
-        .additional-notes-textarea:disabled {
-            background: #f5f5f5;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        .progress-bar {
-            height: 4px;
-            background: #f0f0f0;
-            position: sticky;
-            top: 0;
-            z-index: 200;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: #FA8700;
-            transition: width 0.4s ease;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 90px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #2a2a2a;
-            color: white;
-            padding: 13px 26px;
-            border-radius: 8px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            z-index: 1000;
-            display: none;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .toast.show {
-            display: block;
-            animation: slideUp 0.3s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateX(-50%) translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(-50%) translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .expand-collapse-all {
-            display: flex;
-            gap: 10px;
-            padding: 15px 20px;
-            background: #fafafa;
-            border-bottom: 1px solid #ececec;
-        }
-
-        .expand-collapse-btn {
-            flex: 1;
-            padding: 11px;
-            border: 1px solid #d4d4d4;
-            background: white;
-            color: #666;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.2s;
-        }
-
-        .expand-collapse-btn:hover {
-            background: #f5f5f5;
-            border-color: #FA8700;
-            color: #FA8700;
-        }
-
-        .expand-collapse-btn:active {
-            transform: scale(0.98);
-        }
-
-        @media (max-width: 600px) {
-            .header h1 {
-                font-size: 18px;
-            }
-
-            .condition-buttons {
-                grid-template-columns: repeat(5, 1fr);
-                gap: 6px;
-            }
-
-            .condition-btn {
-                padding: 10px 6px;
-                font-size: 11px;
-            }
-        }
-
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .loading-overlay.active {
-            display: flex;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #FA8700;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        /* PDF Preview Modal */
-        .pdf-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            padding: 20px;
-        }
-
-        .pdf-modal.active {
-            display: flex;
-        }
-
-        .pdf-content {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .pdf-content h2 {
-            color: #FA8700;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .pdf-preview-text {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-            max-height: 400px;
-            overflow-y: auto;
-            font-size: 13px;
-            line-height: 1.8;
-        }
-
-        .pdf-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .pdf-actions button {
-            flex: 1;
-        }
-    </style>
 </head>
 <body>
     <div class="progress-bar">
         <div class="progress-fill" id="progressFill"></div>
     </div>
 
-    <div class="container">
-        <div class="header">
-            <h1>MAXAMY MOBILE AUTOCARE<br>Pre-Purchase Inspection Report</h1>
-            <button type="button" onclick="startNewInspection()" class="new-inspection-btn">🔄 Start New Inspection</button>
+```
+<div class="storage-indicator" id="storageIndicator">
+    <div class="storage-dot"></div>
+    <span id="storageText">Storage OK</span>
+</div>
+
+<div class="container">
+    <div class="header">
+        <h1>MAXAMY MOBILE AUTOCARE<br>Pre-Purchase Inspection Report</h1>
+        <button type="button" onclick="startNewInspection()" class="new-inspection-btn">🔄 Start New Inspection</button>
+    </div>
+
+    <form id="inspectionForm">
+        <div class="basic-info">
+            <div class="form-group inspection-type-selector">
+                <label for="inspectionType">Type of Inspection *</label>
+                <select id="inspectionType" required onchange="updateInspectionType()">
+                    <option value="">Select Inspection Type</option>
+                    <option value="basic">Basic Inspection</option>
+                    <option value="standard">Standard Inspection (136-Point Check)</option>
+                    <option value="premium">Premium Inspection (185-Point Check)</option>
+                </select>
+                <div class="inspection-level-info" id="inspectionInfo"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="inspectionLocation">Inspection Location *</label>
+                <input type="text" id="inspectionLocation" required placeholder="e.g., Customer's home, garage address">
+            </div>
+            <div class="form-group">
+                <label for="inspectionDate">Inspection Date *</label>
+                <input type="date" id="inspectionDate" required>
+            </div>
+            <div class="form-group">
+                <label for="carMake">Car Make *</label>
+                <input type="text" id="carMake" required placeholder="e.g., Ford, BMW, Toyota">
+            </div>
+            <div class="form-group">
+                <label for="carModel">Car Model *</label>
+                <input type="text" id="carModel" required placeholder="e.g., Focus, 3 Series, Corolla">
+            </div>
+            <div class="form-group">
+                <label for="registrationPlate">Registration Plate *</label>
+                <input type="text" id="registrationPlate" required placeholder="e.g., AB12 CDE" style="text-transform: uppercase;">
+            </div>
         </div>
 
-        <form id="inspectionForm">
-            <div class="basic-info">
-                <div class="form-group inspection-type-selector">
-                    <label for="inspectionType">Type of Inspection *</label>
-                    <select id="inspectionType" required onchange="updateInspectionType()">
-                        <option value="">Select Inspection Type</option>
-                        <option value="basic">Basic Inspection</option>
-                        <option value="standard">Standard Inspection (136-Point Check)</option>
-                        <option value="premium">Premium Inspection (185-Point Check)</option>
-                    </select>
-                    <div class="inspection-level-info" id="inspectionInfo"></div>
-                </div>
+        <div class="expand-collapse-all">
+            <button type="button" class="expand-collapse-btn" onclick="expandAll()">📂 Expand All</button>
+            <button type="button" class="expand-collapse-btn" onclick="collapseAll()">📁 Collapse All</button>
+        </div>
 
-                <div class="form-group">
-                    <label for="inspectionLocation">Inspection Location *</label>
-                    <input type="text" id="inspectionLocation" required placeholder="e.g., Customer's home, garage address">
-                </div>
-                <div class="form-group">
-                    <label for="inspectionDate">Inspection Date *</label>
-                    <input type="date" id="inspectionDate" required>
-                </div>
-                <div class="form-group">
-                    <label for="carMake">Car Make *</label>
-                    <input type="text" id="carMake" required placeholder="e.g., Ford, BMW, Toyota">
-                </div>
-                <div class="form-group">
-                    <label for="carModel">Car Model *</label>
-                    <input type="text" id="carModel" required placeholder="e.g., Focus, 3 Series, Corolla">
-                </div>
-                <div class="form-group">
-                    <label for="registrationPlate">Registration Plate *</label>
-                    <input type="text" id="registrationPlate" required placeholder="e.g., AB12 CDE" style="text-transform: uppercase;">
-                </div>
+        <div id="inspectionSections"></div>
+
+        <!-- Additional Notes Section -->
+        <div class="additional-notes-section">
+            <h3>Additional Notes</h3>
+            <div class="checkbox-group">
+                <input type="checkbox" id="additionalNotesCheckbox" onchange="toggleAdditionalNotes()">
+                <label for="additionalNotesCheckbox">Add additional findings or advice for the potential buyer</label>
             </div>
+            <textarea 
+                id="additionalNotesText" 
+                class="additional-notes-textarea" 
+                placeholder="Enter any additional findings, recommendations, or advice here..."
+                disabled
+            ></textarea>
+        </div>
 
-            <div class="expand-collapse-all">
-                <button type="button" class="expand-collapse-btn" onclick="expandAll()">📂 Expand All</button>
-                <button type="button" class="expand-collapse-btn" onclick="collapseAll()">📁 Collapse All</button>
-            </div>
+        <div class="action-buttons">
+            <button type="button" class="btn btn-secondary" onclick="saveProgress()">Save</button>
+            <button type="button" class="btn btn-success" onclick="generatePDF()">Generate PDF</button>
+        </div>
+    </form>
+</div>
 
-            <div id="inspectionSections"></div>
+<div id="toast" class="toast"></div>
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div class="loading-text">Generating PDF Report...</div>
+</div>
 
-            <!-- Additional Notes Section -->
-            <div class="additional-notes-section">
-                <h3>Additional Notes</h3>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="additionalNotesCheckbox" onchange="toggleAdditionalNotes()">
-                    <label for="additionalNotesCheckbox">Add additional findings or advice for the potential buyer</label>
-                </div>
-                <textarea 
-                    id="additionalNotesText" 
-                    class="additional-notes-textarea" 
-                    placeholder="Enter any additional findings, recommendations, or advice here..."
-                    disabled
-                ></textarea>
-            </div>
-
-            <div class="action-buttons">
-                <button type="button" class="btn btn-secondary" onclick="saveProgress()">Save</button>
-                <button type="button" class="btn btn-success" onclick="generatePDF()">Generate PDF</button>
-            </div>
-        </form>
-    </div>
-
-    <div id="toast" class="toast"></div>
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
-        <div class="loading-text">Generating PDF Report...</div>
-    </div>
-
-    <!-- PDF Preview Modal -->
-    <div class="pdf-modal" id="pdfModal">
-        <div class="pdf-content">
-            <h2>📄 PDF Report Generated</h2>
-            <p>Your inspection report has been created successfully!</p>
-            <div class="pdf-preview-text" id="pdfPreview"></div>
-            <div class="pdf-actions">
-                <button class="btn btn-secondary" onclick="closePDFModal()">Close</button>
-                <button class="btn btn-primary" onclick="downloadPDF()">📥 Download PDF</button>
-            </div>
+<!-- PDF Preview Modal -->
+<div class="pdf-modal" id="pdfModal">
+    <div class="pdf-content">
+        <h2>📄 PDF Report Generated</h2>
+        <p>Your inspection report has been created successfully!</p>
+        <div class="pdf-preview-text" id="pdfPreview"></div>
+        <div class="pdf-actions">
+            <button class="btn btn-secondary" onclick="closePDFModal()">Close</button>
+            <button class="btn btn-primary" onclick="downloadPDF()">📥 Download PDF</button>
         </div>
     </div>
+</div>
 
-    <!-- jsPDF Library - loaded at the end -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- jsPDF Library - loaded at the end -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <script>
-        // Check if jsPDF loaded
-        window.addEventListener('load', function() {
-            if (typeof window.jspdf === 'undefined') {
-                console.error('jsPDF failed to load!');
-                alert('PDF library failed to load. Please refresh the page.');
+<script>
+    // Check if jsPDF loaded
+    window.addEventListener('load', function() {
+        if (typeof window.jspdf === 'undefined') {
+            console.error('jsPDF failed to load!');
+            alert('PDF library failed to load. Please refresh the page.');
+        } else {
+            console.log('jsPDF loaded successfully');
+        }
+    });
+
+    // Store generated PDF globally
+    let generatedPDFBlob = null;
+    let generatedPDFFilename = '';
+
+    // INSPECTION DATA - Same as before
+    const inspectionData = {
+        "Interior Compartment": {
+            items: [
+                { name: "Door locking", level: ["basic", "standard", "premium"] },
+                { name: "Boot/tailgate lock", level: ["basic", "standard", "premium"] },
+                { name: "Door seals", level: ["standard", "premium"] },
+                { name: "Door hinges", level: ["standard", "premium"] },
+                { name: "Door trim panels", level: ["standard", "premium"] },
+                { name: "Dash panel condition", level: ["standard", "premium"] },
+                { name: "Interior sills", level: ["standard", "premium"] },
+                { name: "Illuminating lights", level: ["basic", "standard", "premium"] },
+                { name: "Seat upholstery", level: ["standard", "premium"] },
+                { name: "Seat mechanism (front seats)", level: ["standard", "premium"] },
+                { name: "Steering wheel adjustment", level: ["standard", "premium"] },
+                { name: "Rear view mirror condition", level: ["basic", "standard", "premium"] },
+                { name: "Cigarette lighter", level: ["standard", "premium"] },
+                { name: "Headlining", level: ["standard", "premium"] },
+                { name: "Visors", level: ["standard", "premium"] },
+                { name: "Carpets", level: ["standard", "premium"] },
+                { name: "Sunroof condition", level: ["standard", "premium"] },
+                { name: "Rear parcel shelf", level: ["standard", "premium"] },
+                { name: "Rear luggage area condition", level: ["standard", "premium"] },
+                { name: "Tool kit", level: ["standard", "premium"] },
+                { name: "Charging ports", level: ["standard", "premium"] },
+                { name: "Seat belts", level: ["basic", "standard", "premium"] }
+            ]
+        },
+        "Electrical / Controls": {
+            items: [
+                { name: "Headlights", level: ["basic", "standard", "premium"] },
+                { name: "Side light/running lights", level: ["basic", "standard", "premium"] },
+                { name: "Indicators/hazard lights", level: ["basic", "standard", "premium"] },
+                { name: "Rear lights/number plate lights", level: ["basic", "standard", "premium"] },
+                { name: "Stop lights", level: ["basic", "standard", "premium"] },
+                { name: "Reverse/fog lights", level: ["basic", "standard", "premium"] },
+                { name: "Auxiliary lights", level: ["standard", "premium"] },
+                { name: "Panel lights", level: ["standard", "premium"] },
+                { name: "Switches/controls (Condition & Operation)", level: ["standard", "premium"] },
+                { name: "Instrument/controls function", level: ["basic", "standard", "premium"] },
+                { name: "Horn", level: ["basic", "standard", "premium"] },
+                { name: "Windows/sunroof operation", level: ["standard", "premium"] },
+                { name: "Front windscreen wipers", level: ["basic", "standard", "premium"] },
+                { name: "Front windscreen washers", level: ["basic", "standard", "premium"] },
+                { name: "Rear wiper", level: ["standard", "premium"] },
+                { name: "Rear washer", level: ["standard", "premium"] },
+                { name: "Headlamp washer", level: ["standard", "premium"] },
+                { name: "Headlamp wiper", level: ["standard", "premium"] },
+                { name: "Electric/manual mirrors operation", level: ["standard", "premium"] },
+                { name: "CD/Radio operation", level: ["standard", "premium"] },
+                { name: "Interior lights", level: ["standard", "premium"] },
+                { name: "Battery voltage", level: ["basic", "standard", "premium"] },
+                { name: "Climate control/heater fan controls", level: ["standard", "premium"] },
+                { name: "Screens (info/entertainment)", level: ["standard", "premium"] },
+                { name: "Key Fobs", level: ["standard", "premium"] },
+                { name: "Manual locking key blade & operation", level: ["standard", "premium"] },
+                { name: "Steering wheel controls", level: ["standard", "premium"] }
+            ]
+        },
+        "Road Test": {
+            items: [
+                { name: "Driving test (up to 5 miles)", level: ["standard", "premium"] },
+                { name: "Starting system/ignition lock", level: ["basic", "standard", "premium"] },
+                { name: "Warning lights", level: ["basic", "standard", "premium"] },
+                { name: "Cold starting", level: ["standard", "premium"] },
+                { name: "Fast idle (cold)", level: ["standard", "premium"] },
+                { name: "Noise level (cold)", level: ["standard", "premium"] },
+                { name: "Excess fumes/smoke", level: ["basic", "standard", "premium"] },
+                { name: "Engine – noise level", level: ["basic", "premium"] },
+                { name: "Engine – general performance", level: ["basic", "premium"] },
+                { name: "Overheating evidence", level: ["basic", "standard", "premium"] },
+                { name: "Turbo/super charger operation & noise", level: ["standard", "premium"] },
+                { name: "Battery charging system", level: ["standard", "premium"] },
+                { name: "Hand/parking brake operation", level: ["basic", "standard", "premium"] },
+                { name: "Footbrake operation", level: ["basic", "standard", "premium"] },
+                { name: "Gearbox operation/noise level", level: ["standard", "premium"] },
+                { name: "Clutch operation", level: ["standard", "premium"] },
+                { name: "Accelerator Pedal Operation", level: ["basic", "standard", "premium"] },
+                { name: "Instrument/controls function", level: ["standard", "premium"] },
+                { name: "General steering/handling", level: ["basic", "standard", "premium"] },
+                { name: "Road holding/stability", level: ["standard", "premium"] },
+                { name: "Suspension noise", level: ["basic", "standard", "premium"] },
+                { name: "Cruise control", level: ["standard", "premium"] },
+                { name: "Steering wheel alignment", level: ["basic", "standard", "premium"] },
+                { name: "Steering effort", level: ["standard", "premium"] },
+                { name: "Four wheel drive operation", level: ["standard", "premium"] },
+                { name: "Suspension ride height level operation", level: ["standard", "premium"] },
+                { name: "Air con operation", level: ["standard", "premium"] },
+                { name: "Final drive operation/noise level", level: ["standard", "premium"] },
+                { name: "Hot restarting", level: ["standard", "premium"] },
+                { name: "Cooling fan operation", level: ["standard", "premium"] },
+                { name: "Stop-start system", level: ["standard", "premium"] },
+                { name: "Hill start system", level: ["standard", "premium"] },
+                { name: "Automatic transmission operation & shifts", level: ["standard", "premium"] }
+            ]
+        },
+        "Engine Compartment": {
+            items: [
+                { name: "Bonnet catch", level: ["basic", "standard", "premium"] },
+                { name: "Bonnet hinges", level: ["standard", "premium"] },
+                { name: "General cleanliness of engine bay", level: ["standard", "premium"] },
+                { name: "Coolant/antifreeze level", level: ["basic", "standard", "premium"] },
+                { name: "Coolant leaks", level: ["basic", "standard", "premium"] },
+                { name: "Radiator/expansion bottle cap", level: ["premium"] },
+                { name: "Hoses/pipes", level: ["standard", "premium"] },
+                { name: "Engine oil level", level: ["basic", "standard", "premium"] },
+                { name: "Drive belts (visible damage)", level: ["basic", "standard", "premium"] },
+                { name: "Water pump operation", level: ["premium"] },
+                { name: "Power steering fluid level", level: ["basic", "standard", "premium"] },
+                { name: "Clutch fluid level", level: ["standard", "premium"] },
+                { name: "Brake fluid level", level: ["basic", "standard", "premium"] },
+                { name: "Engine mountings", level: ["standard", "premium"] },
+                { name: "Fuel Injection Leak Off Pipe Condition (if visible)", level: ["premium"] },
+                { name: "External leaks", level: ["basic", "standard", "premium"] },
+                { name: "Accelerator links", level: ["premium"] },
+                { name: "Fuel pump/pipes", level: ["premium"] }
+            ]
+        },
+        "Wheels & Tyres": {
+            items: [
+                { name: "Front right tyre", level: ["basic", "standard", "premium"] },
+                { name: "Front left tyre", level: ["basic", "standard", "premium"] },
+                { name: "Rear right tyre", level: ["basic", "standard", "premium"] },
+                { name: "Rear left tyre", level: ["basic", "standard", "premium"] },
+                { name: "Uneven tyre wear", level: ["basic", "standard", "premium"] },
+                { name: "Spare wheel condition", level: ["standard", "premium"] },
+                { name: "Locking wheel nut key", level: ["standard", "premium"] },
+                { name: "Wheel rims", level: ["standard", "premium"] },
+                { name: "Wheel trims", level: ["standard", "premium"] },
+                { name: "Alloy wheel condition (if applicable)", level: ["standard", "premium"] },
+                { name: "Tyre inflation kit", level: ["standard", "premium"] }
+            ]
+        },
+        "Bodywork & Exterior": {
+            items: [
+                { name: "Glass", level: ["basic", "standard", "premium"] },
+                { name: "Door locks/operation", level: ["basic", "standard", "premium"] },
+                { name: "Fuel filler cover/petrol cap", level: ["basic", "standard", "premium"] },
+                { name: "Body damage", level: ["basic", "standard", "premium"] },
+                { name: "Windshield (condition)", level: ["basic", "standard", "premium"] },
+                { name: "Past repairs evident", level: ["standard", "premium"] },
+                { name: "Corrosion", level: ["basic", "standard", "premium"] },
+                { name: "Paint work", level: ["standard", "premium"] },
+                { name: "Mud flaps", level: ["standard", "premium"] },
+                { name: "Bumper", level: ["basic", "standard", "premium"] },
+                { name: "Number plate", level: ["basic", "standard", "premium"] },
+                { name: "Panel condition", level: ["standard", "premium"] }
+            ]
+        },
+        "Front Suspension, Brakes & Steering": {
+            items: [
+                { name: "Wheels hubs/bearings", level: ["standard", "premium"] },
+                { name: "Brake pads (visual check)", level: ["basic", "standard", "premium"] },
+                { name: "Brake discs (visual check)", level: ["basic", "standard", "premium"] },
+                { name: "Brake pipes/hoses (where visible)", level: ["basic", "standard", "premium"] },
+                { name: "Road springs", level: ["standard", "premium"] },
+                { name: "Shock absorbers (condition/leaks)", level: ["basic", "standard", "premium"] },
+                { name: "Bump stops/gaiters", level: ["standard", "premium"] },
+                { name: "Suspension arms/mountings", level: ["premium"] },
+                { name: "Suspension arms/fixings", level: ["premium"] },
+                { name: "Tie bars/anti roll bars", level: ["premium"] },
+                { name: "Location rod/fixings", level: ["premium"] },
+                { name: "Bushes", level: ["premium"] },
+                { name: "Steering joints/ball joints", level: ["basic", "standard", "premium"] },
+                { name: "Steering rack", level: ["standard", "premium"] },
+                { name: "Power steering", level: ["standard", "premium"] }
+            ]
+        },
+        "Rear Suspension & Brakes": {
+            items: [
+                { name: "Wheels hubs/bearings", level: ["standard", "premium"] },
+                { name: "Brake pads (visual check)", level: ["basic", "standard", "premium"] },
+                { name: "Brake discs (visual check)", level: ["basic", "standard", "premium"] },
+                { name: "Brake pipes/hoses (if visible)", level: ["basic", "standard", "premium"] },
+                { name: "Road springs", level: ["standard", "premium"] },
+                { name: "Shock absorbers (condition/leaks)", level: ["basic", "standard", "premium"] },
+                { name: "Bump stops/gaiters", level: ["standard", "premium"] },
+                { name: "Suspension arms/mountings", level: ["premium"] },
+                { name: "Suspension arms/fixings", level: ["premium"] },
+                { name: "Tie bars/anti roll bars", level: ["premium"] },
+                { name: "Bushes", level: ["premium"] }
+            ]
+        },
+        "Brake Hydraulics": {
+            items: [
+                { name: "Master cylinder security (if accessible)", level: ["premium"] },
+                { name: "Fluid leaks", level: ["premium"] },
+                { name: "Servo/power system", level: ["premium"] },
+                { name: "Flexible hoses", level: ["premium"] },
+                { name: "Pipes/connections", level: ["premium"] }
+            ]
+        },
+        "Clutch & Transmission": {
+            items: [
+                { name: "Fluid/oil leaks", level: ["premium"] },
+                { name: "Hydraulic system", level: ["premium"] },
+                { name: "Linkage wear (manual)", level: ["premium"] },
+                { name: "Casings", level: ["premium"] },
+                { name: "Mountings", level: ["premium"] },
+                { name: "Drive shaft assemblies", level: ["premium"] },
+                { name: "Sliding joints (if visible)", level: ["premium"] },
+                { name: "Slave cylinder gaiter/boot (manual)", level: ["premium"] },
+                { name: "Propshaft(s)", level: ["premium"] },
+                { name: "Bearings", level: ["premium"] },
+                { name: "Clutch pedal", level: ["premium"] },
+                { name: "Clutch cable adjustments", level: ["premium"] },
+                { name: "4WD transmission (if applicable)", level: ["premium"] },
+                { name: "Dual mass flywheel (noise/vibration)", level: ["premium"] }
+            ]
+        },
+        "Underside Condition": {
+            items: [
+                { name: "Chassis members", level: ["premium"] },
+                { name: "Sub frames/mountings", level: ["premium"] },
+                { name: "Corrosion – floor/chassis", level: ["basic", "premium"] },
+                { name: "Corrosion protection", level: ["premium"] },
+                { name: "Engine underside leakage", level: ["basic", "premium"] }
+            ]
+        },
+        "Fuel System": {
+            items: [
+                { name: "Tank fixings", level: ["premium"] },
+                { name: "Fuel lines", level: ["basic", "premium"] },
+                { name: "Breather pipes", level: ["premium"] },
+                { name: "Evidence of leaks", level: ["basic", "premium"] },
+                { name: "Fuel tank (if accessible)", level: ["premium"] }
+            ]
+        },
+        "Exhaust System": {
+            items: [
+                { name: "Operation", level: ["basic", "premium"] },
+                { name: "System condition", level: ["basic", "premium"] },
+                { name: "Exhaust manifold (condition)", level: ["premium"] },
+                { name: "Exhaust pipes (condition)", level: ["premium"] },
+                { name: "Catalytic converter (condition)", level: ["premium"] },
+                { name: "Heat shields condition", level: ["premium"] },
+                { name: "DPF Condition (soot content with plug-in)", level: ["premium"] }
+            ]
+        }
+    };
+
+    const inspectionInfo = {
+        basic: "Essential safety checks: lights, brakes, tyres, fluid levels, body condition, and dashboard warnings. Quick assessment focused on roadworthiness.",
+        standard: "Comprehensive 136-point inspection including all basic checks plus detailed mechanical assessment, road test, suspension analysis, and engine compartment evaluation.",
+        premium: "Complete 185-point professional inspection covering all vehicle systems including underside, transmission, hydraulics, fuel system, and exhaust components."
+    };
+
+    let formData = {};
+    let currentInspectionType = '';
+
+    // [Rest of the JavaScript continues exactly as before...]
+
+    function initializeForm() {
+        const sectionsContainer = document.getElementById('inspectionSections');
+        
+        Object.keys(inspectionData).forEach(sectionName => {
+            const section = inspectionData[sectionName];
+            const sectionDiv = document.createElement('div');
+            sectionDiv.className = 'section-accordion';
+            
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerHTML = `
+                <span>${sectionName}</span>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span class="counter" id="counter_${sectionName.replace(/[^a-zA-Z0-9]/g, '_')}">0/0</span>
+                    <span class="arrow">▼</span>
+                </div>
+            `;
+            header.onclick = () => toggleSection(sectionName);
+            
+            const content = document.createElement('div');
+            content.className = 'section-content';
+            content.id = `content_${sectionName.replace(/[^a-zA-Z0-9]/g, '_')}`;
+
+            section.items.forEach((itemObj, index) => {
+                const itemId = `${sectionName.replace(/[^a-zA-Z0-9]/g, '_')}_${index}`;
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'inspection-item';
+                itemDiv.dataset.levels = JSON.stringify(itemObj.level);
+                itemDiv.dataset.itemId = itemId;
+                itemDiv.innerHTML = `
+                    <div class="item-name">${itemObj.name}</div>
+                    <div class="condition-buttons">
+                        <button type="button" class="condition-btn excellent" onclick="selectCondition('${itemId}', 'Excellent', this)">Excellent</button>
+                        <button type="button" class="condition-btn good" onclick="selectCondition('${itemId}', 'Good', this)">Good</button>
+                        <button type="button" class="condition-btn fair" onclick="selectCondition('${itemId}', 'Fair', this)">Fair</button>
+                        <button type="button" class="condition-btn poor" onclick="selectCondition('${itemId}', 'Poor', this)">Poor</button>
+                        <button type="button" class="condition-btn na" onclick="selectCondition('${itemId}', 'N/A', this)">N/A</button>
+                    </div>
+                    <textarea class="notes-area" placeholder="Add notes (optional)..." id="notes_${itemId}"></textarea>
+                    <div class="image-upload-section">
+                        <label class="upload-btn">
+                            <input type="file" accept="image/*" multiple class="hidden" onchange="handleImageUpload(event, '${itemId}')" capture="environment">
+                            Add Photos
+                        </label>
+                        <div class="image-preview" id="preview_${itemId}"></div>
+                    </div>
+                `;
+                
+                content.appendChild(itemDiv);
+                
+                formData[itemId] = {
+                    section: sectionName,
+                    item: itemObj.name,
+                    levels: itemObj.level,
+                    condition: null,
+                    notes: '',
+                    images: []
+                };
+            });
+
+            sectionDiv.appendChild(header);
+            sectionDiv.appendChild(content);
+            sectionsContainer.appendChild(sectionDiv);
+        });
+
+        loadSavedData();
+        updateProgress();
+    }
+
+    function updateInspectionType() {
+        const select = document.getElementById('inspectionType');
+        currentInspectionType = select.value;
+        
+        const infoDiv = document.getElementById('inspectionInfo');
+        if (currentInspectionType) {
+            infoDiv.textContent = inspectionInfo[currentInspectionType];
+            infoDiv.style.display = 'block';
+        } else {
+            infoDiv.textContent = '';
+            infoDiv.style.display = 'none';
+        }
+
+        document.querySelectorAll('.inspection-item').forEach(item => {
+            const itemLevels = JSON.parse(item.dataset.levels);
+            const shouldShow = itemLevels.includes(currentInspectionType);
+
+            if (shouldShow) {
+                item.classList.remove('hidden');
             } else {
-                console.log('jsPDF loaded successfully');
+                item.classList.add('hidden');
             }
         });
 
-        // Store generated PDF globally
-        let generatedPDFBlob = null;
-        let generatedPDFFilename = '';
-
-        // INSPECTION DATA - Same as before
-        const inspectionData = {
-            "Interior Compartment": {
-                items: [
-                    { name: "Door locking", level: ["basic", "standard", "premium"] },
-                    { name: "Boot/tailgate lock", level: ["basic", "standard", "premium"] },
-                    { name: "Door seals", level: ["standard", "premium"] },
-                    { name: "Door hinges", level: ["standard", "premium"] },
-                    { name: "Door trim panels", level: ["standard", "premium"] },
-                    { name: "Dash panel condition", level: ["standard", "premium"] },
-                    { name: "Interior sills", level: ["standard", "premium"] },
-                    { name: "Illuminating lights", level: ["basic", "standard", "premium"] },
-                    { name: "Seat upholstery", level: ["standard", "premium"] },
-                    { name: "Seat mechanism (front seats)", level: ["standard", "premium"] },
-                    { name: "Steering wheel adjustment", level: ["standard", "premium"] },
-                    { name: "Rear view mirror condition", level: ["basic", "standard", "premium"] },
-                    { name: "Cigarette lighter", level: ["standard", "premium"] },
-                    { name: "Headlining", level: ["standard", "premium"] },
-                    { name: "Visors", level: ["standard", "premium"] },
-                    { name: "Carpets", level: ["standard", "premium"] },
-                    { name: "Sunroof condition", level: ["standard", "premium"] },
-                    { name: "Rear parcel shelf", level: ["standard", "premium"] },
-                    { name: "Rear luggage area condition", level: ["standard", "premium"] },
-                    { name: "Tool kit", level: ["standard", "premium"] },
-                    { name: "Charging ports", level: ["standard", "premium"] },
-                    { name: "Seat belts", level: ["basic", "standard", "premium"] }
-                ]
-            },
-            "Electrical / Controls": {
-                items: [
-                    { name: "Headlights", level: ["basic", "standard", "premium"] },
-                    { name: "Side light/running lights", level: ["basic", "standard", "premium"] },
-                    { name: "Indicators/hazard lights", level: ["basic", "standard", "premium"] },
-                    { name: "Rear lights/number plate lights", level: ["basic", "standard", "premium"] },
-                    { name: "Stop lights", level: ["basic", "standard", "premium"] },
-                    { name: "Reverse/fog lights", level: ["basic", "standard", "premium"] },
-                    { name: "Auxiliary lights", level: ["standard", "premium"] },
-                    { name: "Panel lights", level: ["standard", "premium"] },
-                    { name: "Switches/controls (Condition & Operation)", level: ["standard", "premium"] },
-                    { name: "Instrument/controls function", level: ["basic", "standard", "premium"] },
-                    { name: "Horn", level: ["basic", "standard", "premium"] },
-                    { name: "Windows/sunroof operation", level: ["standard", "premium"] },
-                    { name: "Front windscreen wipers", level: ["basic", "standard", "premium"] },
-                    { name: "Front windscreen washers", level: ["basic", "standard", "premium"] },
-                    { name: "Rear wiper", level: ["standard", "premium"] },
-                    { name: "Rear washer", level: ["standard", "premium"] },
-                    { name: "Headlamp washer", level: ["standard", "premium"] },
-                    { name: "Headlamp wiper", level: ["standard", "premium"] },
-                    { name: "Electric/manual mirrors operation", level: ["standard", "premium"] },
-                    { name: "CD/Radio operation", level: ["standard", "premium"] },
-                    { name: "Interior lights", level: ["standard", "premium"] },
-                    { name: "Battery voltage", level: ["basic", "standard", "premium"] },
-                    { name: "Climate control/heater fan controls", level: ["standard", "premium"] },
-                    { name: "Screens (info/entertainment)", level: ["standard", "premium"] },
-                    { name: "Key Fobs", level: ["standard", "premium"] },
-                    { name: "Manual locking key blade & operation", level: ["standard", "premium"] },
-                    { name: "Steering wheel controls", level: ["standard", "premium"] }
-                ]
-            },
-            "Road Test": {
-                items: [
-                    { name: "Driving test (up to 5 miles)", level: ["standard", "premium"] },
-                    { name: "Starting system/ignition lock", level: ["basic", "standard", "premium"] },
-                    { name: "Warning lights", level: ["basic", "standard", "premium"] },
-                    { name: "Cold starting", level: ["standard", "premium"] },
-                    { name: "Fast idle (cold)", level: ["standard", "premium"] },
-                    { name: "Noise level (cold)", level: ["standard", "premium"] },
-                    { name: "Excess fumes/smoke", level: ["basic", "standard", "premium"] },
-                    { name: "Engine – noise level", level: ["basic", "premium"] },
-                    { name: "Engine – general performance", level: ["basic", "premium"] },
-                    { name: "Overheating evidence", level: ["basic", "standard", "premium"] },
-                    { name: "Turbo/super charger operation & noise", level: ["standard", "premium"] },
-                    { name: "Battery charging system", level: ["standard", "premium"] },
-                    { name: "Hand/parking brake operation", level: ["basic", "standard", "premium"] },
-                    { name: "Footbrake operation", level: ["basic", "standard", "premium"] },
-                    { name: "Gearbox operation/noise level", level: ["standard", "premium"] },
-                    { name: "Clutch operation", level: ["standard", "premium"] },
-                    { name: "Accelerator Pedal Operation", level: ["basic", "standard", "premium"] },
-                    { name: "Instrument/controls function", level: ["standard", "premium"] },
-                    { name: "General steering/handling", level: ["basic", "standard", "premium"] },
-                    { name: "Road holding/stability", level: ["standard", "premium"] },
-                    { name: "Suspension noise", level: ["basic", "standard", "premium"] },
-                    { name: "Cruise control", level: ["standard", "premium"] },
-                    { name: "Steering wheel alignment", level: ["basic", "standard", "premium"] },
-                    { name: "Steering effort", level: ["standard", "premium"] },
-                    { name: "Four wheel drive operation", level: ["standard", "premium"] },
-                    { name: "Suspension ride height level operation", level: ["standard", "premium"] },
-                    { name: "Air con operation", level: ["standard", "premium"] },
-                    { name: "Final drive operation/noise level", level: ["standard", "premium"] },
-                    { name: "Hot restarting", level: ["standard", "premium"] },
-                    { name: "Cooling fan operation", level: ["standard", "premium"] },
-                    { name: "Stop-start system", level: ["standard", "premium"] },
-                    { name: "Hill start system", level: ["standard", "premium"] },
-                    { name: "Automatic transmission operation & shifts", level: ["standard", "premium"] }
-                ]
-            },
-            "Engine Compartment": {
-                items: [
-                    { name: "Bonnet catch", level: ["basic", "standard", "premium"] },
-                    { name: "Bonnet hinges", level: ["standard", "premium"] },
-                    { name: "General cleanliness of engine bay", level: ["standard", "premium"] },
-                    { name: "Coolant/antifreeze level", level: ["basic", "standard", "premium"] },
-                    { name: "Coolant leaks", level: ["basic", "standard", "premium"] },
-                    { name: "Radiator/expansion bottle cap", level: ["premium"] },
-                    { name: "Hoses/pipes", level: ["standard", "premium"] },
-                    { name: "Engine oil level", level: ["basic", "standard", "premium"] },
-                    { name: "Drive belts (visible damage)", level: ["basic", "standard", "premium"] },
-                    { name: "Water pump operation", level: ["premium"] },
-                    { name: "Power steering fluid level", level: ["basic", "standard", "premium"] },
-                    { name: "Clutch fluid level", level: ["standard", "premium"] },
-                    { name: "Brake fluid level", level: ["basic", "standard", "premium"] },
-                    { name: "Engine mountings", level: ["standard", "premium"] },
-                    { name: "Fuel Injection Leak Off Pipe Condition (if visible)", level: ["premium"] },
-                    { name: "External leaks", level: ["basic", "standard", "premium"] },
-                    { name: "Accelerator links", level: ["premium"] },
-                    { name: "Fuel pump/pipes", level: ["premium"] }
-                ]
-            },
-            "Wheels & Tyres": {
-                items: [
-                    { name: "Front right tyre", level: ["basic", "standard", "premium"] },
-                    { name: "Front left tyre", level: ["basic", "standard", "premium"] },
-                    { name: "Rear right tyre", level: ["basic", "standard", "premium"] },
-                    { name: "Rear left tyre", level: ["basic", "standard", "premium"] },
-                    { name: "Uneven tyre wear", level: ["basic", "standard", "premium"] },
-                    { name: "Spare wheel condition", level: ["standard", "premium"] },
-                    { name: "Locking wheel nut key", level: ["standard", "premium"] },
-                    { name: "Wheel rims", level: ["standard", "premium"] },
-                    { name: "Wheel trims", level: ["standard", "premium"] },
-                    { name: "Alloy wheel condition (if applicable)", level: ["standard", "premium"] },
-                    { name: "Tyre inflation kit", level: ["standard", "premium"] }
-                ]
-            },
-            "Bodywork & Exterior": {
-                items: [
-                    { name: "Glass", level: ["basic", "standard", "premium"] },
-                    { name: "Door locks/operation", level: ["basic", "standard", "premium"] },
-                    { name: "Fuel filler cover/petrol cap", level: ["basic", "standard", "premium"] },
-                    { name: "Body damage", level: ["basic", "standard", "premium"] },
-                    { name: "Windshield (condition)", level: ["basic", "standard", "premium"] },
-                    { name: "Past repairs evident", level: ["standard", "premium"] },
-                    { name: "Corrosion", level: ["basic", "standard", "premium"] },
-                    { name: "Paint work", level: ["standard", "premium"] },
-                    { name: "Mud flaps", level: ["standard", "premium"] },
-                    { name: "Bumper", level: ["basic", "standard", "premium"] },
-                    { name: "Number plate", level: ["basic", "standard", "premium"] },
-                    { name: "Panel condition", level: ["standard", "premium"] }
-                ]
-            },
-            "Front Suspension, Brakes & Steering": {
-                items: [
-                    { name: "Wheels hubs/bearings", level: ["standard", "premium"] },
-                    { name: "Brake pads (visual check)", level: ["basic", "standard", "premium"] },
-                    { name: "Brake discs (visual check)", level: ["basic", "standard", "premium"] },
-                    { name: "Brake pipes/hoses (where visible)", level: ["basic", "standard", "premium"] },
-                    { name: "Road springs", level: ["standard", "premium"] },
-                    { name: "Shock absorbers (condition/leaks)", level: ["basic", "standard", "premium"] },
-                    { name: "Bump stops/gaiters", level: ["standard", "premium"] },
-                    { name: "Suspension arms/mountings", level: ["premium"] },
-                    { name: "Suspension arms/fixings", level: ["premium"] },
-                    { name: "Tie bars/anti roll bars", level: ["premium"] },
-                    { name: "Location rod/fixings", level: ["premium"] },
-                    { name: "Bushes", level: ["premium"] },
-                    { name: "Steering joints/ball joints", level: ["basic", "standard", "premium"] },
-                    { name: "Steering rack", level: ["standard", "premium"] },
-                    { name: "Power steering", level: ["standard", "premium"] }
-                ]
-            },
-            "Rear Suspension & Brakes": {
-                items: [
-                    { name: "Wheels hubs/bearings", level: ["standard", "premium"] },
-                    { name: "Brake pads (visual check)", level: ["basic", "standard", "premium"] },
-                    { name: "Brake discs (visual check)", level: ["basic", "standard", "premium"] },
-                    { name: "Brake pipes/hoses (if visible)", level: ["basic", "standard", "premium"] },
-                    { name: "Road springs", level: ["standard", "premium"] },
-                    { name: "Shock absorbers (condition/leaks)", level: ["basic", "standard", "premium"] },
-                    { name: "Bump stops/gaiters", level: ["standard", "premium"] },
-                    { name: "Suspension arms/mountings", level: ["premium"] },
-                    { name: "Suspension arms/fixings", level: ["premium"] },
-                    { name: "Tie bars/anti roll bars", level: ["premium"] },
-                    { name: "Bushes", level: ["premium"] }
-                ]
-            },
-            "Brake Hydraulics": {
-                items: [
-                    { name: "Master cylinder security (if accessible)", level: ["premium"] },
-                    { name: "Fluid leaks", level: ["premium"] },
-                    { name: "Servo/power system", level: ["premium"] },
-                    { name: "Flexible hoses", level: ["premium"] },
-                    { name: "Pipes/connections", level: ["premium"] }
-                ]
-            },
-            "Clutch & Transmission": {
-                items: [
-                    { name: "Fluid/oil leaks", level: ["premium"] },
-                    { name: "Hydraulic system", level: ["premium"] },
-                    { name: "Linkage wear (manual)", level: ["premium"] },
-                    { name: "Casings", level: ["premium"] },
-                    { name: "Mountings", level: ["premium"] },
-                    { name: "Drive shaft assemblies", level: ["premium"] },
-                    { name: "Sliding joints (if visible)", level: ["premium"] },
-                    { name: "Slave cylinder gaiter/boot (manual)", level: ["premium"] },
-                    { name: "Propshaft(s)", level: ["premium"] },
-                    { name: "Bearings", level: ["premium"] },
-                    { name: "Clutch pedal", level: ["premium"] },
-                    { name: "Clutch cable adjustments", level: ["premium"] },
-                    { name: "4WD transmission (if applicable)", level: ["premium"] },
-                    { name: "Dual mass flywheel (noise/vibration)", level: ["premium"] }
-                ]
-            },
-            "Underside Condition": {
-                items: [
-                    { name: "Chassis members", level: ["premium"] },
-                    { name: "Sub frames/mountings", level: ["premium"] },
-                    { name: "Corrosion – floor/chassis", level: ["basic", "premium"] },
-                    { name: "Corrosion protection", level: ["premium"] },
-                    { name: "Engine underside leakage", level: ["basic", "premium"] }
-                ]
-            },
-            "Fuel System": {
-                items: [
-                    { name: "Tank fixings", level: ["premium"] },
-                    { name: "Fuel lines", level: ["basic", "premium"] },
-                    { name: "Breather pipes", level: ["premium"] },
-                    { name: "Evidence of leaks", level: ["basic", "premium"] },
-                    { name: "Fuel tank (if accessible)", level: ["premium"] }
-                ]
-            },
-            "Exhaust System": {
-                items: [
-                    { name: "Operation", level: ["basic", "premium"] },
-                    { name: "System condition", level: ["basic", "premium"] },
-                    { name: "Exhaust manifold (condition)", level: ["premium"] },
-                    { name: "Exhaust pipes (condition)", level: ["premium"] },
-                    { name: "Catalytic converter (condition)", level: ["premium"] },
-                    { name: "Heat shields condition", level: ["premium"] },
-                    { name: "DPF Condition (soot content with plug-in)", level: ["premium"] }
-                ]
-            }
-        };
-
-        const inspectionInfo = {
-            basic: "Essential safety checks: lights, brakes, tyres, fluid levels, body condition, and dashboard warnings. Quick assessment focused on roadworthiness.",
-            standard: "Comprehensive 136-point inspection including all basic checks plus detailed mechanical assessment, road test, suspension analysis, and engine compartment evaluation.",
-            premium: "Complete 185-point professional inspection covering all vehicle systems including underside, transmission, hydraulics, fuel system, and exhaust components."
-        };
-
-        let formData = {};
-        let currentInspectionType = '';
-
-        // [Rest of the JavaScript continues exactly as before until the generatePDF function...]
-        // [Include all the initializeForm, updateInspectionType, toggleSection, etc. functions]
-
-        function initializeForm() {
-            const sectionsContainer = document.getElementById('inspectionSections');
-            
-            Object.keys(inspectionData).forEach(sectionName => {
-                const section = inspectionData[sectionName];
-                const sectionDiv = document.createElement('div');
-                sectionDiv.className = 'section-accordion';
-                
-                const header = document.createElement('div');
-                header.className = 'section-header';
-                header.innerHTML = `
-                    <span>${sectionName}</span>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <span class="counter" id="counter_${sectionName.replace(/[^a-zA-Z0-9]/g, '_')}">0/0</span>
-                        <span class="arrow">▼</span>
-                    </div>
-                `;
-                header.onclick = () => toggleSection(sectionName);
-                
-                const content = document.createElement('div');
-                content.className = 'section-content';
-                content.id = `content_${sectionName.replace(/[^a-zA-Z0-9]/g, '_')}`;
-
-                section.items.forEach((itemObj, index) => {
-                    const itemId = `${sectionName.replace(/[^a-zA-Z0-9]/g, '_')}_${index}`;
-                    
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'inspection-item';
-                    itemDiv.dataset.levels = JSON.stringify(itemObj.level);
-                    itemDiv.dataset.itemId = itemId;
-                    itemDiv.innerHTML = `
-                        <div class="item-name">${itemObj.name}</div>
-                        <div class="condition-buttons">
-                            <button type="button" class="condition-btn excellent" onclick="selectCondition('${itemId}', 'Excellent', this)">Excellent</button>
-                            <button type="button" class="condition-btn good" onclick="selectCondition('${itemId}', 'Good', this)">Good</button>
-                            <button type="button" class="condition-btn fair" onclick="selectCondition('${itemId}', 'Fair', this)">Fair</button>
-                            <button type="button" class="condition-btn poor" onclick="selectCondition('${itemId}', 'Poor', this)">Poor</button>
-                            <button type="button" class="condition-btn na" onclick="selectCondition('${itemId}', 'N/A', this)">N/A</button>
-                        </div>
-                        <textarea class="notes-area" placeholder="Add notes (optional)..." id="notes_${itemId}"></textarea>
-                        <div class="image-upload-section">
-                            <label class="upload-btn">
-                                <input type="file" accept="image/*" multiple class="hidden" onchange="handleImageUpload(event, '${itemId}')" capture="environment">
-                                Add Photos
-                            </label>
-                            <div class="image-preview" id="preview_${itemId}"></div>
-                        </div>
-                    `;
-                    
-                    content.appendChild(itemDiv);
-                    
-                    formData[itemId] = {
-                        section: sectionName,
-                        item: itemObj.name,
-                        levels: itemObj.level,
-                        condition: null,
-                        notes: '',
-                        images: []
-                    };
-                });
-
-                sectionDiv.appendChild(header);
-                sectionDiv.appendChild(content);
-                sectionsContainer.appendChild(sectionDiv);
-            });
-
-            loadSavedData();
-            updateProgress();
-        }
-
-        function updateInspectionType() {
-            const select = document.getElementById('inspectionType');
-            currentInspectionType = select.value;
-            
-            const infoDiv = document.getElementById('inspectionInfo');
-            if (currentInspectionType) {
-                infoDiv.textContent = inspectionInfo[currentInspectionType];
-                infoDiv.style.display = 'block';
+        document.querySelectorAll('.section-accordion').forEach(sectionDiv => {
+            const visibleItems = sectionDiv.querySelectorAll('.inspection-item:not(.hidden)');
+            if (visibleItems.length === 0) {
+                sectionDiv.classList.add('hidden');
             } else {
-                infoDiv.textContent = '';
-                infoDiv.style.display = 'none';
+                sectionDiv.classList.remove('hidden');
             }
+        });
 
-            document.querySelectorAll('.inspection-item').forEach(item => {
-                const itemLevels = JSON.parse(item.dataset.levels);
-                const shouldShow = itemLevels.includes(currentInspectionType);
+        updateAllCounters();
+        updateProgress();
+        debouncedSave();
+    }
 
-                if (shouldShow) {
-                    item.classList.remove('hidden');
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
+    function toggleSection(sectionName) {
+        const sectionId = sectionName.replace(/[^a-zA-Z0-9]/g, '_');
+        const content = document.getElementById(`content_${sectionId}`);
+        const header = content.previousElementSibling;
+        
+        content.classList.toggle('active');
+        header.classList.toggle('active');
+    }
 
-            document.querySelectorAll('.section-accordion').forEach(sectionDiv => {
-                const visibleItems = sectionDiv.querySelectorAll('.inspection-item:not(.hidden)');
-                if (visibleItems.length === 0) {
-                    sectionDiv.classList.add('hidden');
-                } else {
-                    sectionDiv.classList.remove('hidden');
-                }
-            });
+    function expandAll() {
+        document.querySelectorAll('.section-accordion:not(.hidden) .section-content').forEach(content => {
+            content.classList.add('active');
+            content.previousElementSibling.classList.add('active');
+        });
+    }
 
-            updateAllCounters();
-            updateProgress();
-            debouncedSave();
-        }
+    function collapseAll() {
+        document.querySelectorAll('.section-content').forEach(content => {
+            content.classList.remove('active');
+            content.previousElementSibling.classList.remove('active');
+        });
+    }
 
-        function toggleSection(sectionName) {
-            const sectionId = sectionName.replace(/[^a-zA-Z0-9]/g, '_');
-            const content = document.getElementById(`content_${sectionId}`);
-            const header = content.previousElementSibling;
-            
-            content.classList.toggle('active');
-            header.classList.toggle('active');
-        }
+    function selectCondition(itemId, condition, button) {
+        const buttons = button.parentElement.querySelectorAll('.condition-btn');
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        button.classList.add('selected');
+        
+        formData[itemId].condition = condition;
+        
+        const item = document.querySelector(`[data-item-id="${itemId}"]`);
+        const section = formData[itemId].section;
+        updateSectionCounter(section);
+        
+        updateProgress();
+        debouncedSave();
+    }
 
-        function expandAll() {
-            document.querySelectorAll('.section-accordion:not(.hidden) .section-content').forEach(content => {
-                content.classList.add('active');
-                content.previousElementSibling.classList.add('active');
-            });
-        }
-
-        function collapseAll() {
-            document.querySelectorAll('.section-content').forEach(content => {
-                content.classList.remove('active');
-                content.previousElementSibling.classList.remove('active');
-            });
-        }
-
-        function selectCondition(itemId, condition, button) {
-            const buttons = button.parentElement.querySelectorAll('.condition-btn');
-            buttons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-            
-            formData[itemId].condition = condition;
-            
-            const item = document.querySelector(`[data-item-id="${itemId}"]`);
-            const section = formData[itemId].section;
-            updateSectionCounter(section);
-            
-            updateProgress();
-            debouncedSave();
-        }
-
-        function updateSectionCounter(sectionName) {
-            const sectionId = sectionName.replace(/[^a-zA-Z0-9]/g, '_');
-            const counterEl = document.getElementById(`counter_${sectionId}`);
-            
-            let total = 0;
-            let completed = 0;
-            
-            Object.values(formData).forEach(item => {
-                if (item.section === sectionName) {
-                    const shouldCount = item.levels.includes(currentInspectionType);
-                    if (shouldCount) {
-                        total++;
-                        if (item.condition !== null) {
-                            completed++;
-                        }
+    function updateSectionCounter(sectionName) {
+        const sectionId = sectionName.replace(/[^a-zA-Z0-9]/g, '_');
+        const counterEl = document.getElementById(`counter_${sectionId}`);
+        
+        let total = 0;
+        let completed = 0;
+        
+        Object.values(formData).forEach(item => {
+            if (item.section === sectionName) {
+                const shouldCount = item.levels.includes(currentInspectionType);
+                if (shouldCount) {
+                    total++;
+                    if (item.condition !== null) {
+                        completed++;
                     }
                 }
-            });
-            
-            if (counterEl) {
-                counterEl.textContent = `${completed}/${total}`;
             }
+        });
+        
+        if (counterEl) {
+            counterEl.textContent = `${completed}/${total}`;
         }
+    }
 
-        function updateAllCounters() {
-            Object.keys(inspectionData).forEach(sectionName => {
-                updateSectionCounter(sectionName);
-            });
-        }
+    function updateAllCounters() {
+        Object.keys(inspectionData).forEach(sectionName => {
+            updateSectionCounter(sectionName);
+        });
+    }
 
-        // Compress image before storing
-        function compressImage(base64Str, maxWidth = 1200, quality = 0.7) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    let width = img.width;
-                    let height = img.height;
-                    
-                    // Calculate new dimensions
-                    if (width > maxWidth) {
+    // Compress image before storing - More aggressive compression for more images
+    function compressImage(base64Str, maxWidth = 800, quality = 0.5) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+                
+                // Calculate new dimensions
+                if (width > maxWidth || height > maxWidth) {
+                    if (width > height) {
                         height = (height * maxWidth) / width;
                         width = maxWidth;
+                    } else {
+                        width = (width * maxWidth) / height;
+                        height = maxWidth;
                     }
-                    
-                    canvas.width = width;
-                    canvas.height = height;
-                    
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-                    
-                    // Convert to compressed JPEG
-                    const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
-                    resolve(compressedBase64);
-                };
-                img.src = base64Str;
-            });
-        }
-
-        async function handleImageUpload(event, itemId) {
-            const files = event.target.files;
-            const previewContainer = document.getElementById(`preview_${itemId}`);
-            
-            for (const file of Array.from(files)) {
-                // Check file size
-                if (file.size > 10 * 1024 * 1024) { // 10MB
-                    showToast('⚠️ Image too large (max 10MB). Skipping.');
-                    continue;
                 }
                 
-                const reader = new FileReader();
-                reader.onload = async function(e) {
-                    try {
-                        // Compress image
-                        const compressed = await compressImage(e.target.result);
-                        formData[itemId].images.push(compressed);
-                        
-                        const imgDiv = document.createElement('div');
-                        imgDiv.className = 'image-preview-item';
-                        imgDiv.innerHTML = `
-                            <img src="${compressed}" alt="Inspection photo">
-                            <button type="button" class="remove-image" onclick="removeImage('${itemId}', ${formData[itemId].images.length - 1})">×</button>
-                        `;
-                        previewContainer.appendChild(imgDiv);
-                        
-                        // Try to save, catch quota errors
-                        try {
-                            saveToLocalStorage();
-                        } catch (storageError) {
-                            if (storageError.name === 'QuotaExceededError') {
-                                // Remove the image we just added
-                                formData[itemId].images.pop();
-                                previewContainer.removeChild(previewContainer.lastChild);
-                                showToast('⚠️ Storage full! Please generate PDF or remove some photos.', 5000);
-                                alert('⚠️ Browser Storage Full!\n\nYou have too many photos. Please:\n\n1. Generate and download the PDF now (recommended), or\n2. Remove some earlier photos\n\nYour inspection data is still safe in memory.');
-                                return; // Stop processing this file
-                            }
-                        }
-                    } catch (err) {
-                        console.error('Image compression error:', err);
-                        showToast('⚠️ Failed to process image');
-                    }
-                };
-                reader.readAsDataURL(file);
+                canvas.width = width;
+                canvas.height = height;
+                
+                const ctx = canvas.getContext('2d');
+                // Improve image quality during resize
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // Convert to compressed JPEG with lower quality for smaller files
+                const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+                
+                // Log compression ratio for debugging
+                console.log(`Image compressed: ${(base64Str.length / 1024).toFixed(1)}KB → ${(compressedBase64.length / 1024).toFixed(1)}KB`);
+                
+                resolve(compressedBase64);
+            };
+            img.src = base64Str;
+        });
+    }
+
+    async function handleImageUpload(event, itemId) {
+        const files = event.target.files;
+        const previewContainer = document.getElementById(`preview_${itemId}`);
+        
+        // Show helpful message on first upload
+        const isFirstUpload = Object.values(formData).every(item => !item.images || item.images.length === 0);
+        if (isFirstUpload && files.length > 0) {
+            showToast('📸 Images are compressed to 800px for optimal storage', 3000);
+        }
+        
+        for (const file of Array.from(files)) {
+            // Check file size
+            if (file.size > 10 * 1024 * 1024) { // 10MB
+                showToast('⚠️ Image too large (max 10MB). Skipping.');
+                continue;
             }
-
-            event.target.value = '';
+            
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    // Compress image
+                    const compressed = await compressImage(e.target.result);
+                    formData[itemId].images.push(compressed);
+                    
+                    const imgDiv = document.createElement('div');
+                    imgDiv.className = 'image-preview-item';
+                    imgDiv.innerHTML = `
+                        <img src="${compressed}" alt="Inspection photo">
+                        <button type="button" class="remove-image" onclick="removeImage('${itemId}', ${formData[itemId].images.length - 1})">×</button>
+                    `;
+                    previewContainer.appendChild(imgDiv);
+                    
+                    // Try to save, catch quota errors
+                    try {
+                        saveToLocalStorage();
+                        checkStorageUsage(); // Update storage indicator
+                    } catch (storageError) {
+                        if (storageError.name === 'QuotaExceededError') {
+                            // Remove the image we just added
+                            formData[itemId].images.pop();
+                            previewContainer.removeChild(previewContainer.lastChild);
+                            showToast('⚠️ Storage full! Please generate PDF or remove some photos.', 5000);
+                            alert('⚠️ Browser Storage Full!\n\nYou have too many photos. Please:\n\n1. Generate and download the PDF now (recommended), or\n2. Remove some earlier photos\n\nYour inspection data is still safe in memory.');
+                            return; // Stop processing this file
+                        }
+                    }
+                } catch (err) {
+                    console.error('Image compression error:', err);
+                    showToast('⚠️ Failed to process image');
+                }
+            };
+            reader.readAsDataURL(file);
         }
 
-        function removeImage(itemId, imageIndex) {
-            formData[itemId].images.splice(imageIndex, 1);
-            const previewContainer = document.getElementById(`preview_${itemId}`);
-            previewContainer.innerHTML = '';
-            
-            formData[itemId].images.forEach((imgSrc, idx) => {
-                const imgDiv = document.createElement('div');
-                imgDiv.className = 'image-preview-item';
-                imgDiv.innerHTML = `
-                    <img src="${imgSrc}" alt="Inspection photo">
-                    <button type="button" class="remove-image" onclick="removeImage('${itemId}', ${idx})">×</button>
-                `;
-                previewContainer.appendChild(imgDiv);
-            });
-            
-            saveToLocalStorage();
+        event.target.value = '';
+    }
+
+    function removeImage(itemId, imageIndex) {
+        formData[itemId].images.splice(imageIndex, 1);
+        const previewContainer = document.getElementById(`preview_${itemId}`);
+        previewContainer.innerHTML = '';
+        
+        formData[itemId].images.forEach((imgSrc, idx) => {
+            const imgDiv = document.createElement('div');
+            imgDiv.className = 'image-preview-item';
+            imgDiv.innerHTML = `
+                <img src="${imgSrc}" alt="Inspection photo">
+                <button type="button" class="remove-image" onclick="removeImage('${itemId}', ${idx})">×</button>
+            `;
+            previewContainer.appendChild(imgDiv);
+        });
+        
+        saveToLocalStorage();
+        checkStorageUsage(); // Update storage indicator
+    }
+
+    function updateProgress() {
+        let totalItems = 0;
+        let completedItems = 0;
+        
+        Object.values(formData).forEach(item => {
+            if (item.levels.includes(currentInspectionType)) {
+                totalItems++;
+                if (item.condition !== null) {
+                    completedItems++;
+                }
+            }
+        });
+        
+        const percentage = totalItems > 0 ? (completedItems / totalItems) * 100 : 0;
+        document.getElementById('progressFill').style.width = `${percentage}%`;
+    }
+
+    function saveToLocalStorage() {
+        const basicInfo = {
+            inspectionType: document.getElementById('inspectionType').value,
+            location: document.getElementById('inspectionLocation').value,
+            date: document.getElementById('inspectionDate').value,
+            make: document.getElementById('carMake').value,
+            model: document.getElementById('carModel').value,
+            plate: document.getElementById('registrationPlate').value,
+            additionalNotesEnabled: document.getElementById('additionalNotesCheckbox').checked,
+            additionalNotes: document.getElementById('additionalNotesText').value
+        };
+
+        Object.keys(formData).forEach(itemId => {
+            const notesField = document.getElementById(`notes_${itemId}`);
+            if (notesField) {
+                formData[itemId].notes = notesField.value;
+            }
+        });
+
+        try {
+            localStorage.setItem('maxamyInspectionBasicInfo', JSON.stringify(basicInfo));
+            localStorage.setItem('maxamyInspectionFormData', JSON.stringify(formData));
+        } catch (e) {
+            if (e.name === 'QuotaExceededError') {
+                console.error('Storage quota exceeded:', e);
+                // Show error to user
+                alert('⚠️ Storage Limit Reached!\n\nYou have too many photos saved. Please:\n1. Generate and download the PDF now, or\n2. Remove some photos, or\n3. Use CSV export (without images)\n\nYour current data is still in memory but won\'t auto-save.');
+                throw e; // Re-throw so calling code can handle it
+            } else {
+                console.error('Storage error:', e);
+            }
+        }
+    }
+
+    function loadSavedData() {
+        // Check if last inspection was completed
+        const inspectionCompleted = localStorage.getItem('maxamyInspectionCompleted');
+        if (inspectionCompleted === 'true') {
+            // Clear everything and start fresh
+            localStorage.removeItem('maxamyInspectionBasicInfo');
+            localStorage.removeItem('maxamyInspectionFormData');
+            localStorage.removeItem('maxamyInspectionCompleted');
+            return;
         }
 
-        function updateProgress() {
-            let totalItems = 0;
-            let completedItems = 0;
+        const savedBasicInfo = localStorage.getItem('maxamyInspectionBasicInfo');
+        const savedFormData = localStorage.getItem('maxamyInspectionFormData');
+
+        if (savedBasicInfo) {
+            const basicInfo = JSON.parse(savedBasicInfo);
             
-            Object.values(formData).forEach(item => {
-                if (item.levels.includes(currentInspectionType)) {
-                    totalItems++;
-                    if (item.condition !== null) {
-                        completedItems++;
+            // Show indicator that we're loading saved data
+            if (basicInfo.plate || basicInfo.make) {
+                showToast('📂 Loaded saved inspection data');
+            }
+            
+            document.getElementById('inspectionType').value = basicInfo.inspectionType || '';
+            document.getElementById('inspectionLocation').value = basicInfo.location || '';
+            document.getElementById('inspectionDate').value = basicInfo.date || '';
+            document.getElementById('carMake').value = basicInfo.make || '';
+            document.getElementById('carModel').value = basicInfo.model || '';
+            document.getElementById('registrationPlate').value = basicInfo.plate || '';
+            
+            // Restore additional notes
+            if (basicInfo.additionalNotesEnabled) {
+                document.getElementById('additionalNotesCheckbox').checked = true;
+                document.getElementById('additionalNotesText').disabled = false;
+                document.getElementById('additionalNotesText').value = basicInfo.additionalNotes || '';
+            }
+            
+            // Store the plate for change detection
+            lastSavedPlate = basicInfo.plate || '';
+            
+            if (basicInfo.inspectionType) {
+                currentInspectionType = basicInfo.inspectionType;
+                updateInspectionType();
+            }
+        }
+
+        if (savedFormData) {
+            const saved = JSON.parse(savedFormData);
+            Object.keys(saved).forEach(itemId => {
+                if (formData[itemId]) {
+                    formData[itemId] = saved[itemId];
+                    
+                    if (saved[itemId].condition) {
+                        const itemDiv = document.querySelector(`[data-item-id="${itemId}"]`);
+                        if (itemDiv) {
+                            const buttons = itemDiv.querySelectorAll('.condition-btn');
+                            buttons.forEach(btn => {
+                                if (btn.textContent === saved[itemId].condition) {
+                                    btn.classList.add('selected');
+                                }
+                            });
+                        }
+                    }
+
+                    const notesField = document.getElementById(`notes_${itemId}`);
+                    if (notesField) {
+                        notesField.value = saved[itemId].notes || '';
+                    }
+
+                    const previewContainer = document.getElementById(`preview_${itemId}`);
+                    if (previewContainer && saved[itemId].images) {
+                        saved[itemId].images.forEach((imgSrc, idx) => {
+                            const imgDiv = document.createElement('div');
+                            imgDiv.className = 'image-preview-item';
+                            imgDiv.innerHTML = `
+                                <img src="${imgSrc}" alt="Inspection photo">
+                                <button type="button" class="remove-image" onclick="removeImage('${itemId}', ${idx})">×</button>
+                            `;
+                            previewContainer.appendChild(imgDiv);
+                        });
                     }
                 }
             });
+            updateAllCounters();
+        }
+    }
+
+    function saveProgress() {
+        try {
+            saveToLocalStorage();
+            showToast('✓ Progress saved successfully!');
+        } catch (e) {
+            if (e.name === 'QuotaExceededError') {
+                showToast('⚠️ Cannot save - storage full! Generate PDF now.', 5000);
+            } else {
+                showToast('⚠️ Save failed - but your work is still in memory', 4000);
+            }
+        }
+    }
+
+    // Monitor storage usage with UI update
+    function checkStorageUsage() {
+        try {
+            const basicInfo = localStorage.getItem('maxamyInspectionBasicInfo');
+            const formDataStr = localStorage.getItem('maxamyInspectionFormData');
+            const totalSize = (basicInfo?.length || 0) + (formDataStr?.length || 0);
             
-            const percentage = totalItems > 0 ? (completedItems / totalItems) * 100 : 0;
-            document.getElementById('progressFill').style.width = `${percentage}%`;
+            // Count total images
+            let imageCount = 0;
+            Object.values(formData).forEach(item => {
+                if (item.images) imageCount += item.images.length;
+            });
+            
+            // localStorage limit is typically 5-10MB (5-10 million characters)
+            const estimatedMB = totalSize / (1024 * 1024);
+            const limitMB = 5; // Conservative estimate
+            const percentUsed = (estimatedMB / limitMB) * 100;
+            
+            const indicator = document.getElementById('storageIndicator');
+            const storageText = document.getElementById('storageText');
+            
+            if (imageCount > 0) {
+                indicator.classList.add('show');
+                
+                if (percentUsed > 90) {
+                    // Critical - over 90%
+                    indicator.className = 'storage-indicator show critical';
+                    storageText.textContent = `${imageCount} photos - Storage ${percentUsed.toFixed(0)}% full!`;
+                    console.error(`Storage critical: ${estimatedMB.toFixed(2)}MB used (${imageCount} photos)`);
+                    return 'critical';
+                } else if (percentUsed > 70) {
+                    // Warning - over 70%
+                    indicator.className = 'storage-indicator show warning';
+                    storageText.textContent = `${imageCount} photos - ${percentUsed.toFixed(0)}% full`;
+                    console.warn(`Storage warning: ${estimatedMB.toFixed(2)}MB used (${imageCount} photos)`);
+                    return 'warning';
+                } else {
+                    // OK
+                    indicator.className = 'storage-indicator show';
+                    storageText.textContent = `${imageCount} photo${imageCount !== 1 ? 's' : ''}`;
+                    return 'ok';
+                }
+            } else {
+                indicator.classList.remove('show');
+            }
+            
+            return 'ok';
+        } catch (e) {
+            console.error('Storage check error:', e);
+            return 'error';
+        }
+    }
+
+    // Start New Inspection
+    function toggleAdditionalNotes() {
+        const checkbox = document.getElementById('additionalNotesCheckbox');
+        const textarea = document.getElementById('additionalNotesText');
+        textarea.disabled = !checkbox.checked;
+        if (!checkbox.checked) {
+            textarea.value = '';
+        }
+        debouncedSave();
+    }
+
+    function startNewInspection() {
+        if (confirm('Are you sure you want to start a new inspection? All current data will be cleared.')) {
+            // Clear localStorage
+            localStorage.removeItem('maxamyInspectionBasicInfo');
+            localStorage.removeItem('maxamyInspectionFormData');
+            
+            // Reload page
+            location.reload();
+        }
+    }
+
+    // Detect when registration plate changes
+    let lastSavedPlate = '';
+    document.getElementById('registrationPlate').addEventListener('blur', function() {
+        const currentPlate = this.value.trim().toUpperCase();
+        
+        if (lastSavedPlate && currentPlate && lastSavedPlate !== currentPlate) {
+            if (confirm(`You've changed the registration plate from ${lastSavedPlate} to ${currentPlate}. Would you like to start a fresh inspection for this vehicle?`)) {
+                localStorage.removeItem('maxamyInspectionBasicInfo');
+                localStorage.removeItem('maxamyInspectionFormData');
+                location.reload();
+            }
+        }
+        
+        if (currentPlate) {
+            lastSavedPlate = currentPlate;
+        }
+    });
+
+    // FIXED PDF GENERATION - Now includes actual images!
+    async function generatePDF() {
+        if (!currentInspectionType) {
+            alert('Please select an inspection type first.');
+            return;
         }
 
-        function saveToLocalStorage() {
+        try {
+            // Try to save but don't fail if storage is full
+            try {
+                saveToLocalStorage();
+            } catch (storageError) {
+                console.warn('Could not save to storage, but continuing with PDF generation');
+            }
+            
+            document.getElementById('loadingOverlay').classList.add('active');
+            document.querySelector('.loading-text').textContent = 'Generating PDF with images...';
+
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            // Check if jsPDF is available
+            if (typeof window.jspdf === 'undefined') {
+                throw new Error('PDF library not loaded. Please refresh the page.');
+            }
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
             const basicInfo = {
                 inspectionType: document.getElementById('inspectionType').value,
                 location: document.getElementById('inspectionLocation').value,
                 date: document.getElementById('inspectionDate').value,
                 make: document.getElementById('carMake').value,
                 model: document.getElementById('carModel').value,
-                plate: document.getElementById('registrationPlate').value,
-                additionalNotesEnabled: document.getElementById('additionalNotesCheckbox').checked,
-                additionalNotes: document.getElementById('additionalNotesText').value
+                plate: document.getElementById('registrationPlate').value
             };
 
-            Object.keys(formData).forEach(itemId => {
-                const notesField = document.getElementById(`notes_${itemId}`);
-                if (notesField) {
-                    formData[itemId].notes = notesField.value;
-                }
-            });
+            let yPos = 20;
+            const pageHeight = doc.internal.pageSize.height;
+            const pageWidth = doc.internal.pageSize.width;
+            const margin = 20;
+            const maxWidth = 170;
 
-            try {
-                localStorage.setItem('maxamyInspectionBasicInfo', JSON.stringify(basicInfo));
-                localStorage.setItem('maxamyInspectionFormData', JSON.stringify(formData));
-            } catch (e) {
-                if (e.name === 'QuotaExceededError') {
-                    console.error('Storage quota exceeded:', e);
-                    // Show error to user
-                    alert('⚠️ Storage Limit Reached!\n\nYou have too many photos saved. Please:\n1. Generate and download the PDF now, or\n2. Remove some photos, or\n3. Use CSV export (without images)\n\nYour current data is still in memory but won\'t auto-save.');
-                    throw e; // Re-throw so calling code can handle it
-                } else {
-                    console.error('Storage error:', e);
-                }
-            }
-        }
+            // Header
+            doc.setFillColor(250, 135, 0);
+            doc.rect(0, 0, 210, 40, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'bold');
+            doc.text('MAXAMY MOBILE AUTOCARE', 105, 15, { align: 'center' });
+            doc.setFontSize(18);
+            doc.text('Pre-Purchase Inspection Report', 105, 28, { align: 'center' });
 
-        function loadSavedData() {
-            // Check if last inspection was completed
-            const inspectionCompleted = localStorage.getItem('maxamyInspectionCompleted');
-            if (inspectionCompleted === 'true') {
-                // Clear everything and start fresh
-                localStorage.removeItem('maxamyInspectionBasicInfo');
-                localStorage.removeItem('maxamyInspectionFormData');
-                localStorage.removeItem('maxamyInspectionCompleted');
-                return;
-            }
+            yPos = 50;
+            doc.setTextColor(0, 0, 0);
 
-            const savedBasicInfo = localStorage.getItem('maxamyInspectionBasicInfo');
-            const savedFormData = localStorage.getItem('maxamyInspectionFormData');
+            // Vehicle Information
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Vehicle Information', margin, yPos);
+            yPos += 8;
 
-            if (savedBasicInfo) {
-                const basicInfo = JSON.parse(savedBasicInfo);
-                
-                // Show indicator that we're loading saved data
-                if (basicInfo.plate || basicInfo.make) {
-                    showToast('📂 Loaded saved inspection data');
-                }
-                
-                document.getElementById('inspectionType').value = basicInfo.inspectionType || '';
-                document.getElementById('inspectionLocation').value = basicInfo.location || '';
-                document.getElementById('inspectionDate').value = basicInfo.date || '';
-                document.getElementById('carMake').value = basicInfo.make || '';
-                document.getElementById('carModel').value = basicInfo.model || '';
-                document.getElementById('registrationPlate').value = basicInfo.plate || '';
-                
-                // Restore additional notes
-                if (basicInfo.additionalNotesEnabled) {
-                    document.getElementById('additionalNotesCheckbox').checked = true;
-                    document.getElementById('additionalNotesText').disabled = false;
-                    document.getElementById('additionalNotesText').value = basicInfo.additionalNotes || '';
-                }
-                
-                // Store the plate for change detection
-                lastSavedPlate = basicInfo.plate || '';
-                
-                if (basicInfo.inspectionType) {
-                    currentInspectionType = basicInfo.inspectionType;
-                    updateInspectionType();
-                }
-            }
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Inspection Type: ${basicInfo.inspectionType.toUpperCase()}`, margin, yPos);
+            yPos += 6;
+            doc.text(`Date: ${basicInfo.date}`, margin, yPos);
+            yPos += 6;
+            doc.text(`Location: ${basicInfo.location}`, margin, yPos);
+            yPos += 6;
+            doc.text(`Vehicle: ${basicInfo.make} ${basicInfo.model}`, margin, yPos);
+            yPos += 6;
+            doc.text(`Registration: ${basicInfo.plate}`, margin, yPos);
+            yPos += 12;
 
-            if (savedFormData) {
-                const saved = JSON.parse(savedFormData);
-                Object.keys(saved).forEach(itemId => {
-                    if (formData[itemId]) {
-                        formData[itemId] = saved[itemId];
-                        
-                        if (saved[itemId].condition) {
-                            const itemDiv = document.querySelector(`[data-item-id="${itemId}"]`);
-                            if (itemDiv) {
-                                const buttons = itemDiv.querySelectorAll('.condition-btn');
-                                buttons.forEach(btn => {
-                                    if (btn.textContent === saved[itemId].condition) {
-                                        btn.classList.add('selected');
-                                    }
-                                });
-                            }
-                        }
+            // Inspection Results
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Inspection Results', margin, yPos);
+            yPos += 10;
 
-                        const notesField = document.getElementById(`notes_${itemId}`);
-                        if (notesField) {
-                            notesField.value = saved[itemId].notes || '';
-                        }
+            let totalImages = 0;
 
-                        const previewContainer = document.getElementById(`preview_${itemId}`);
-                        if (previewContainer && saved[itemId].images) {
-                            saved[itemId].images.forEach((imgSrc, idx) => {
-                                const imgDiv = document.createElement('div');
-                                imgDiv.className = 'image-preview-item';
-                                imgDiv.innerHTML = `
-                                    <img src="${imgSrc}" alt="Inspection photo">
-                                    <button type="button" class="remove-image" onclick="removeImage('${itemId}', ${idx})">×</button>
-                                `;
-                                previewContainer.appendChild(imgDiv);
-                            });
-                        }
-                    }
-                });
-                updateAllCounters();
-            }
-        }
+            for (const sectionName of Object.keys(inspectionData)) {
+                const sectionItems = Object.values(formData).filter(item => 
+                    item.section === sectionName && item.levels.includes(currentInspectionType)
+                );
 
-        function saveProgress() {
-            try {
-                saveToLocalStorage();
-                showToast('✓ Progress saved successfully!');
-            } catch (e) {
-                if (e.name === 'QuotaExceededError') {
-                    showToast('⚠️ Cannot save - storage full! Generate PDF now.', 5000);
-                } else {
-                    showToast('⚠️ Save failed - but your work is still in memory', 4000);
-                }
-            }
-        }
+                if (sectionItems.length === 0) continue;
 
-        // Monitor storage usage
-        function checkStorageUsage() {
-            try {
-                // Estimate storage used
-                const basicInfo = localStorage.getItem('maxamyInspectionBasicInfo');
-                const formDataStr = localStorage.getItem('maxamyInspectionFormData');
-                const totalSize = (basicInfo?.length || 0) + (formDataStr?.length || 0);
-                
-                // localStorage limit is typically 5-10MB (5-10 million characters)
-                const estimatedMB = totalSize / (1024 * 1024);
-                const limitMB = 5; // Conservative estimate
-                
-                if (estimatedMB > limitMB * 0.8) {
-                    // Over 80% full
-                    console.warn(`Storage warning: ${estimatedMB.toFixed(2)}MB used`);
-                    return 'warning';
-                } else if (estimatedMB > limitMB * 0.95) {
-                    // Over 95% full
-                    console.error(`Storage critical: ${estimatedMB.toFixed(2)}MB used`);
-                    return 'critical';
-                }
-                return 'ok';
-            } catch (e) {
-                return 'error';
-            }
-        }
-
-        // Start New Inspection
-        function toggleAdditionalNotes() {
-            const checkbox = document.getElementById('additionalNotesCheckbox');
-            const textarea = document.getElementById('additionalNotesText');
-            textarea.disabled = !checkbox.checked;
-            if (!checkbox.checked) {
-                textarea.value = '';
-            }
-            debouncedSave();
-        }
-
-        function startNewInspection() {
-            if (confirm('Are you sure you want to start a new inspection? All current data will be cleared.')) {
-                // Clear localStorage
-                localStorage.removeItem('maxamyInspectionBasicInfo');
-                localStorage.removeItem('maxamyInspectionFormData');
-                
-                // Reload page
-                location.reload();
-            }
-        }
-
-        // Detect when registration plate changes
-        let lastSavedPlate = '';
-        document.getElementById('registrationPlate').addEventListener('blur', function() {
-            const currentPlate = this.value.trim().toUpperCase();
-            
-            if (lastSavedPlate && currentPlate && lastSavedPlate !== currentPlate) {
-                if (confirm(`You've changed the registration plate from ${lastSavedPlate} to ${currentPlate}. Would you like to start a fresh inspection for this vehicle?`)) {
-                    localStorage.removeItem('maxamyInspectionBasicInfo');
-                    localStorage.removeItem('maxamyInspectionFormData');
-                    location.reload();
-                }
-            }
-            
-            if (currentPlate) {
-                lastSavedPlate = currentPlate;
-            }
-        });
-
-        // FIXED PDF GENERATION - Now includes actual images!
-        async function generatePDF() {
-            if (!currentInspectionType) {
-                alert('Please select an inspection type first.');
-                return;
-            }
-
-            try {
-                // Try to save but don't fail if storage is full
-                try {
-                    saveToLocalStorage();
-                } catch (storageError) {
-                    console.warn('Could not save to storage, but continuing with PDF generation');
-                }
-                
-                document.getElementById('loadingOverlay').classList.add('active');
-                document.querySelector('.loading-text').textContent = 'Generating PDF with images...';
-
-                await new Promise(resolve => setTimeout(resolve, 500));
-
-                // Check if jsPDF is available
-                if (typeof window.jspdf === 'undefined') {
-                    throw new Error('PDF library not loaded. Please refresh the page.');
+                // Check if new page needed for section header
+                if (yPos > pageHeight - 30) {
+                    doc.addPage();
+                    yPos = 20;
                 }
 
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                
-                const basicInfo = {
-                    inspectionType: document.getElementById('inspectionType').value,
-                    location: document.getElementById('inspectionLocation').value,
-                    date: document.getElementById('inspectionDate').value,
-                    make: document.getElementById('carMake').value,
-                    model: document.getElementById('carModel').value,
-                    plate: document.getElementById('registrationPlate').value
-                };
-
-                let yPos = 20;
-                const pageHeight = doc.internal.pageSize.height;
-                const margin = 20;
-                const maxWidth = 170;
-
-                // Header
+                // Section Header
                 doc.setFillColor(250, 135, 0);
-                doc.rect(0, 0, 210, 40, 'F');
+                doc.rect(margin, yPos - 5, maxWidth, 8, 'F');
                 doc.setTextColor(255, 255, 255);
-                doc.setFontSize(10);
+                doc.setFontSize(11);
                 doc.setFont('helvetica', 'bold');
-                doc.text('MAXAMY MOBILE AUTOCARE', 105, 15, { align: 'center' });
-                doc.setFontSize(18);
-                doc.text('Pre-Purchase Inspection Report', 105, 28, { align: 'center' });
-
-                yPos = 50;
+                doc.text(sectionName, margin + 2, yPos);
+                yPos += 10;
                 doc.setTextColor(0, 0, 0);
 
-                // Vehicle Information
-                doc.setFontSize(12);
-                doc.setFont('helvetica', 'bold');
-                doc.text('Vehicle Information', margin, yPos);
-                yPos += 8;
-
-                doc.setFontSize(10);
-                doc.setFont('helvetica', 'normal');
-                doc.text(`Inspection Type: ${basicInfo.inspectionType.toUpperCase()}`, margin, yPos);
-                yPos += 6;
-                doc.text(`Date: ${basicInfo.date}`, margin, yPos);
-                yPos += 6;
-                doc.text(`Location: ${basicInfo.location}`, margin, yPos);
-                yPos += 6;
-                doc.text(`Vehicle: ${basicInfo.make} ${basicInfo.model}`, margin, yPos);
-                yPos += 6;
-                doc.text(`Registration: ${basicInfo.plate}`, margin, yPos);
-                yPos += 12;
-
-                // Inspection Results
-                doc.setFontSize(12);
-                doc.setFont('helvetica', 'bold');
-                doc.text('Inspection Results', margin, yPos);
-                yPos += 10;
-
-                let totalImages = 0;
-
-                for (const sectionName of Object.keys(inspectionData)) {
-                    const sectionItems = Object.values(formData).filter(item => 
-                        item.section === sectionName && item.levels.includes(currentInspectionType)
-                    );
-
-                    if (sectionItems.length === 0) continue;
-
-                    // Check if new page needed for section header
-                    if (yPos > pageHeight - 30) {
+                for (const item of sectionItems) {
+                    // Calculate space needed
+                    let itemHeight = 12;
+                    if (item.notes) {
+                        const noteLines = doc.splitTextToSize(`Notes: ${item.notes}`, maxWidth - 8);
+                        itemHeight += noteLines.length * 4;
+                    }
+                    
+                    // Check if new page needed
+                    if (yPos + itemHeight > pageHeight - margin) {
                         doc.addPage();
                         yPos = 20;
                     }
 
-                    // Section Header
-                    doc.setFillColor(250, 135, 0);
-                    doc.rect(margin, yPos - 5, maxWidth, 8, 'F');
-                    doc.setTextColor(255, 255, 255);
-                    doc.setFontSize(11);
+                    // Item name
+                    doc.setFontSize(9);
                     doc.setFont('helvetica', 'bold');
-                    doc.text(sectionName, margin + 2, yPos);
-                    yPos += 10;
-                    doc.setTextColor(0, 0, 0);
+                    doc.text(item.item, margin + 2, yPos);
+                    yPos += 5;
 
-                    for (const item of sectionItems) {
-                        // Calculate space needed
-                        let itemHeight = 12;
-                        if (item.notes) {
-                            const noteLines = doc.splitTextToSize(`Notes: ${item.notes}`, maxWidth - 8);
-                            itemHeight += noteLines.length * 4;
+                    // Condition with color
+                    doc.setFont('helvetica', 'normal');
+                    let conditionColor = [107, 114, 128];
+                    if (item.condition === 'Excellent') conditionColor = [16, 185, 129];
+                    else if (item.condition === 'Good') conditionColor = [59, 130, 246];
+                    else if (item.condition === 'Fair') conditionColor = [245, 158, 11];
+                    else if (item.condition === 'Poor') conditionColor = [239, 68, 68];
+
+                    doc.setTextColor(...conditionColor);
+                    doc.text(`Condition: ${item.condition || 'Not Assessed'}`, margin + 4, yPos);
+                    doc.setTextColor(0, 0, 0);
+                    yPos += 5;
+
+                    // Notes
+                    if (item.notes) {
+                        doc.setFontSize(8);
+                        const noteLines = doc.splitTextToSize(`Notes: ${item.notes}`, maxWidth - 8);
+                        doc.text(noteLines, margin + 4, yPos);
+                        yPos += (noteLines.length * 4);
+                    }
+
+                    // Add actual images to PDF
+                    if (item.images && item.images.length > 0) {
+                        doc.setFontSize(8);
+                        doc.setTextColor(250, 135, 0);
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(`PHOTOS (${item.images.length}):`, margin + 4, yPos);
+                        doc.setTextColor(0, 0, 0);
+                        doc.setFont('helvetica', 'normal');
+                        yPos += 8;
+
+                        for (let i = 0; i < item.images.length; i++) {
+                            const imgData = item.images[i];
+
+                            try {
+                                // Detect image format from base64 data
+                                let imgFormat = 'JPEG';
+                                if (imgData.includes('data:image/png')) {
+                                    imgFormat = 'PNG';
+                                } else if (imgData.includes('data:image/jpeg') || imgData.includes('data:image/jpg')) {
+                                    imgFormat = 'JPEG';
+                                } else if (imgData.includes('data:image/webp')) {
+                                    imgFormat = 'WEBP';
+                                }
+
+                                // Get actual image dimensions
+                                const img = new Image();
+                                img.src = imgData;
+                                
+                                // Calculate scaled dimensions maintaining aspect ratio
+                                const maxPDFWidth = 160; // Max width in PDF (leaving margins)
+                                const maxPDFHeight = 120; // Max height to fit reasonably
+                                
+                                let pdfWidth = img.width * 0.264583; // Convert px to mm (96 DPI)
+                                let pdfHeight = img.height * 0.264583;
+                                
+                                // Scale down if needed while maintaining aspect ratio
+                                if (pdfWidth > maxPDFWidth) {
+                                    pdfHeight = (pdfHeight * maxPDFWidth) / pdfWidth;
+                                    pdfWidth = maxPDFWidth;
+                                }
+                                if (pdfHeight > maxPDFHeight) {
+                                    pdfWidth = (pdfWidth * maxPDFHeight) / pdfHeight;
+                                    pdfHeight = maxPDFHeight;
+                                }
+                                
+                                // Check if we need a new page for the image
+                                if (yPos + pdfHeight + 10 > pageHeight - margin) {
+                                    doc.addPage();
+                                    yPos = 20;
+                                }
+
+                                // Add border
+                                doc.setDrawColor(220, 220, 220);
+                                doc.rect(margin + 3, yPos - 2, pdfWidth + 4, pdfHeight + 4);
+                                
+                                // Add image with original aspect ratio
+                                doc.addImage(imgData, imgFormat, margin + 5, yPos, pdfWidth, pdfHeight);
+                                
+                                // Add image caption
+                                doc.setFontSize(7);
+                                doc.setTextColor(120, 120, 120);
+                                doc.text(`Photo ${i + 1}/${item.images.length}`, margin + 5, yPos + pdfHeight + 6);
+                                doc.setTextColor(0, 0, 0);
+                                
+                                yPos += pdfHeight + 10;
+                                totalImages++;
+                                
+                            } catch (imgError) {
+                                console.error('Error adding image:', imgError);
+                                doc.setFontSize(8);
+                                doc.setTextColor(200, 0, 0);
+                                doc.text(`[Image ${i + 1} could not be loaded - ${imgError.message}]`, margin + 10, yPos);
+                                doc.setTextColor(0, 0, 0);
+                                yPos += 6;
+                            }
                         }
                         
-                        // Check if new page needed
-                        if (yPos + itemHeight > pageHeight - margin) {
-                            doc.addPage();
-                            yPos = 20;
-                        }
-
-                        // Item name
-                        doc.setFontSize(9);
-                        doc.setFont('helvetica', 'bold');
-                        doc.text(item.item, margin + 2, yPos);
-                        yPos += 5;
-
-                        // Condition with color
-                        doc.setFont('helvetica', 'normal');
-                        let conditionColor = [107, 114, 128];
-                        if (item.condition === 'Excellent') conditionColor = [16, 185, 129];
-                        else if (item.condition === 'Good') conditionColor = [59, 130, 246];
-                        else if (item.condition === 'Fair') conditionColor = [245, 158, 11];
-                        else if (item.condition === 'Poor') conditionColor = [239, 68, 68];
-
-                        doc.setTextColor(...conditionColor);
-                        doc.text(`Condition: ${item.condition || 'Not Assessed'}`, margin + 4, yPos);
-                        doc.setTextColor(0, 0, 0);
-                        yPos += 5;
-
-                        // Notes
-                        if (item.notes) {
-                            doc.setFontSize(8);
-                            const noteLines = doc.splitTextToSize(`Notes: ${item.notes}`, maxWidth - 8);
-                            doc.text(noteLines, margin + 4, yPos);
-                            yPos += (noteLines.length * 4);
-                        }
-
-                        // Add actual images to PDF
-                        if (item.images && item.images.length > 0) {
-                            doc.setFontSize(8);
-                            doc.setTextColor(250, 135, 0);
-                            doc.setFont('helvetica', 'bold');
-                            doc.text(`PHOTOS (${item.images.length}):`, margin + 4, yPos);
-                            doc.setTextColor(0, 0, 0);
-                            doc.setFont('helvetica', 'normal');
-                            yPos += 8;
-
-                            for (let i = 0; i < item.images.length; i++) {
-                                const imgData = item.images[i];
-
-                                try {
-                                    // Detect image format from base64 data
-                                    let imgFormat = 'JPEG';
-                                    if (imgData.includes('data:image/png')) {
-                                        imgFormat = 'PNG';
-                                    } else if (imgData.includes('data:image/jpeg') || imgData.includes('data:image/jpg')) {
-                                        imgFormat = 'JPEG';
-                                    } else if (imgData.includes('data:image/webp')) {
-                                        imgFormat = 'WEBP';
-                                    }
-
-                                    // Get actual image dimensions
-                                    const img = new Image();
-                                    img.src = imgData;
-                                    
-                                    // Calculate scaled dimensions maintaining aspect ratio
-                                    const maxPDFWidth = 160; // Max width in PDF (leaving margins)
-                                    const maxPDFHeight = 120; // Max height to fit reasonably
-                                    
-                                    let pdfWidth = img.width * 0.264583; // Convert px to mm (96 DPI)
-                                    let pdfHeight = img.height * 0.264583;
-                                    
-                                    // Scale down if needed while maintaining aspect ratio
-                                    if (pdfWidth > maxPDFWidth) {
-                                        pdfHeight = (pdfHeight * maxPDFWidth) / pdfWidth;
-                                        pdfWidth = maxPDFWidth;
-                                    }
-                                    if (pdfHeight > maxPDFHeight) {
-                                        pdfWidth = (pdfWidth * maxPDFHeight) / pdfHeight;
-                                        pdfHeight = maxPDFHeight;
-                                    }
-                                    
-                                    // Check if we need a new page for the image
-                                    if (yPos + pdfHeight + 10 > pageHeight - margin) {
-                                        doc.addPage();
-                                        yPos = 20;
-                                    }
-
-                                    // Add border
-                                    doc.setDrawColor(220, 220, 220);
-                                    doc.rect(margin + 3, yPos - 2, pdfWidth + 4, pdfHeight + 4);
-                                    
-                                    // Add image with original aspect ratio
-                                    doc.addImage(imgData, imgFormat, margin + 5, yPos, pdfWidth, pdfHeight);
-                                    
-                                    // Add image caption
-                                    doc.setFontSize(7);
-                                    doc.setTextColor(120, 120, 120);
-                                    doc.text(`Photo ${i + 1}/${item.images.length}`, margin + 5, yPos + pdfHeight + 6);
-                                    doc.setTextColor(0, 0, 0);
-                                    
-                                    yPos += pdfHeight + 10;
-                                    totalImages++;
-                                    
-                                } catch (imgError) {
-                                    console.error('Error adding image:', imgError);
-                                    doc.setFontSize(8);
-                                    doc.setTextColor(200, 0, 0);
-                                    doc.text(`[Image ${i + 1} could not be loaded - ${imgError.message}]`, margin + 10, yPos);
-                                    doc.setTextColor(0, 0, 0);
-                                    yPos += 6;
-                                }
-                            }
-                            
-                            yPos += 3;
-                        }
-
-                        yPos += 5;
+                        yPos += 3;
                     }
 
-                    yPos += 3;
-                }
-
-                // Add Additional Notes if enabled
-                const additionalNotesCheckbox = document.getElementById('additionalNotesCheckbox');
-                const additionalNotesText = document.getElementById('additionalNotesText');
-                
-                if (additionalNotesCheckbox.checked && additionalNotesText.value.trim()) {
-                    // Check if we need a new page
-                    if (yPos + 30 > pageHeight - margin) {
-                        doc.addPage();
-                        yPos = 20;
-                    }
-                    
-                    // Add section header
-                    yPos += 8;
-                    doc.setFillColor(250, 135, 0);
-                    doc.rect(margin, yPos, pageWidth - 2 * margin, 8, 'F');
-                    doc.setFontSize(11);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(255, 255, 255);
-                    doc.text('ADDITIONAL NOTES', margin + 3, yPos + 5.5);
-                    yPos += 12;
-                    
-                    // Add notes content
-                    doc.setFontSize(9);
-                    doc.setFont('helvetica', 'normal');
-                    doc.setTextColor(0, 0, 0);
-                    
-                    const notesLines = doc.splitTextToSize(additionalNotesText.value.trim(), pageWidth - 2 * margin - 6);
-                    for (const line of notesLines) {
-                        if (yPos > pageHeight - margin - 10) {
-                            doc.addPage();
-                            yPos = 20;
-                        }
-                        doc.text(line, margin + 3, yPos);
-                        yPos += 5;
-                    }
-                    
                     yPos += 5;
                 }
 
-                // Footer on all pages
-                const pageCount = doc.internal.getNumberOfPages();
-                for (let i = 1; i <= pageCount; i++) {
-                    doc.setPage(i);
-                    doc.setFontSize(8);
-                    doc.setTextColor(150, 150, 150);
-                    doc.text(`Page ${i} of ${pageCount}`, 105, pageHeight - 10, { align: 'center' });
-                    doc.text('Maxamy Mobile Autocare | www.maxamy-autocare.co.uk', 105, pageHeight - 6, { align: 'center' });
-                }
+                yPos += 3;
+            }
 
-                // Save PDF
-                const filename = `Maxamy_${basicInfo.inspectionType}_${basicInfo.plate}_${basicInfo.date}.pdf`;
-                const pdfBlob = doc.output('blob');
+            // Add Additional Notes if enabled
+            const additionalNotesCheckbox = document.getElementById('additionalNotesCheckbox');
+            const additionalNotesText = document.getElementById('additionalNotesText');
+            
+            if (additionalNotesCheckbox.checked && additionalNotesText.value.trim()) {
+                // Check if we need a new page
+                if (yPos + 30 > pageHeight - margin) {
+                    doc.addPage();
+                    yPos = 20;
+                }
                 
-                // Store globally for download
-                generatedPDFBlob = pdfBlob;
-                generatedPDFFilename = filename;
-
-                // Create preview text
-                let previewText = `Vehicle: ${basicInfo.make} ${basicInfo.model}\n`;
-                previewText += `Registration: ${basicInfo.plate}\n`;
-                previewText += `Inspection Type: ${basicInfo.inspectionType.toUpperCase()}\n`;
-                previewText += `Date: ${basicInfo.date}\n\n`;
-                previewText += `Total pages: ${pageCount}\n`;
-                previewText += `Photos included: ${totalImages}\n`;
-                previewText += `PDF size: ${(pdfBlob.size / 1024).toFixed(2)} KB\n\n`;
-                previewText += `The PDF contains your complete inspection report with all ratings, notes, and photos.`;
-
-                document.getElementById('pdfPreview').textContent = previewText;
-
-                document.getElementById('loadingOverlay').classList.remove('active');
-                document.getElementById('pdfModal').classList.add('active');
-
-            } catch (error) {
-                console.error('PDF generation error:', error);
-                document.getElementById('loadingOverlay').classList.remove('active');
-                alert(`Error generating PDF: ${error.message}. Please try refreshing the page or using CSV export instead.`);
-            }
-        }
-
-        function downloadPDF() {
-            if (!generatedPDFBlob) {
-                alert('No PDF generated yet!');
-                return;
+                // Add section header
+                yPos += 8;
+                doc.setFillColor(250, 135, 0);
+                doc.rect(margin, yPos, pageWidth - 2 * margin, 8, 'F');
+                doc.setFontSize(11);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(255, 255, 255);
+                doc.text('ADDITIONAL NOTES', margin + 3, yPos + 5.5);
+                yPos += 12;
+                
+                // Add notes content
+                doc.setFontSize(9);
+                doc.setFont('helvetica', 'normal');
+                doc.setTextColor(0, 0, 0);
+                
+                const notesLines = doc.splitTextToSize(additionalNotesText.value.trim(), pageWidth - 2 * margin - 6);
+                for (const line of notesLines) {
+                    if (yPos > pageHeight - margin - 10) {
+                        doc.addPage();
+                        yPos = 20;
+                    }
+                    doc.text(line, margin + 3, yPos);
+                    yPos += 5;
+                }
+                
+                yPos += 5;
             }
 
-            const url = window.URL.createObjectURL(generatedPDFBlob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = generatedPDFFilename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
+            // Footer on all pages
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.setTextColor(150, 150, 150);
+                doc.text(`Page ${i} of ${pageCount}`, 105, pageHeight - 10, { align: 'center' });
+                doc.text('Maxamy Mobile Autocare | www.maxamy-autocare.co.uk', 105, pageHeight - 6, { align: 'center' });
+            }
 
-            // Mark inspection as completed
-            localStorage.setItem('maxamyInspectionCompleted', 'true');
-
-            showToast('✓ PDF downloaded successfully! Starting fresh on next visit.', 4000);
-            closePDFModal();
-        }
-
-        function closePDFModal() {
-            document.getElementById('pdfModal').classList.remove('active');
-        }
-
-        function showToast(message, duration = 3000) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, duration);
-        }
-
-        document.getElementById('inspectionForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+            // Save PDF
+            const filename = `Maxamy_${basicInfo.inspectionType}_${basicInfo.plate}_${basicInfo.date}.pdf`;
+            const pdfBlob = doc.output('blob');
             
-            if (!currentInspectionType) {
-                alert('Please select an inspection type first.');
-                return;
-            }
+            // Store globally for download
+            generatedPDFBlob = pdfBlob;
+            generatedPDFFilename = filename;
 
-            let incompleteItems = 0;
-            Object.values(formData).forEach(item => {
-                if (item.levels.includes(currentInspectionType) && item.condition === null) {
-                    incompleteItems++;
-                }
-            });
-            
-            if (incompleteItems > 0) {
-                if (!confirm(`You have ${incompleteItems} items not assessed. Do you want to generate the PDF anyway?`)) {
-                    return;
-                }
-            }
+            // Create preview text
+            let previewText = `Vehicle: ${basicInfo.make} ${basicInfo.model}\n`;
+            previewText += `Registration: ${basicInfo.plate}\n`;
+            previewText += `Inspection Type: ${basicInfo.inspectionType.toUpperCase()}\n`;
+            previewText += `Date: ${basicInfo.date}\n\n`;
+            previewText += `Total pages: ${pageCount}\n`;
+            previewText += `Photos included: ${totalImages}\n`;
+            previewText += `PDF size: ${(pdfBlob.size / 1024).toFixed(2)} KB\n\n`;
+            previewText += `The PDF contains your complete inspection report with all ratings, notes, and photos.`;
 
-            generatePDF();
-        });
+            document.getElementById('pdfPreview').textContent = previewText;
 
-        // Debounced auto-save to reduce storage writes
-        let autoSaveTimeout = null;
-        function debouncedSave() {
-            if (autoSaveTimeout) {
-                clearTimeout(autoSaveTimeout);
-            }
-            autoSaveTimeout = setTimeout(() => {
-                try {
-                    saveToLocalStorage();
-                } catch (e) {
-                    // Silently fail on auto-save storage errors
-                    console.warn('Auto-save failed due to storage limits');
-                }
-            }, 2000); // Save 2 seconds after last change
+            document.getElementById('loadingOverlay').classList.remove('active');
+            document.getElementById('pdfModal').classList.add('active');
+
+        } catch (error) {
+            console.error('PDF generation error:', error);
+            document.getElementById('loadingOverlay').classList.remove('active');
+            alert(`Error generating PDF: ${error.message}. Please try refreshing the page or using CSV export instead.`);
+        }
+    }
+
+    function downloadPDF() {
+        if (!generatedPDFBlob) {
+            alert('No PDF generated yet!');
+            return;
         }
 
-        // Auto-save
-        document.addEventListener('input', function(e) {
-            if (e.target.classList.contains('notes-area')) {
-                debouncedSave();
-            }
-        });
+        const url = window.URL.createObjectURL(generatedPDFBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = generatedPDFFilename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
 
-        ['inspectionType', 'inspectionLocation', 'inspectionDate', 'carMake', 'carModel', 'registrationPlate'].forEach(id => {
-            document.getElementById(id).addEventListener('input', debouncedSave);
+        // Mark inspection as completed
+        localStorage.setItem('maxamyInspectionCompleted', 'true');
+
+        showToast('✓ PDF downloaded successfully! Starting fresh on next visit.', 4000);
+        closePDFModal();
+    }
+
+    function closePDFModal() {
+        document.getElementById('pdfModal').classList.remove('active');
+    }
+
+    function showToast(message, duration = 3000) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, duration);
+    }
+
+    document.getElementById('inspectionForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!currentInspectionType) {
+            alert('Please select an inspection type first.');
+            return;
+        }
+
+        let incompleteItems = 0;
+        Object.values(formData).forEach(item => {
+            if (item.levels.includes(currentInspectionType) && item.condition === null) {
+                incompleteItems++;
+            }
         });
         
-        // Add auto-save for additional notes textarea
-        document.getElementById('additionalNotesText').addEventListener('input', debouncedSave);
+        if (incompleteItems > 0) {
+            if (!confirm(`You have ${incompleteItems} items not assessed. Do you want to generate the PDF anyway?`)) {
+                return;
+            }
+        }
 
-        // Initialize
-        initializeForm();
-        document.getElementById('inspectionDate').valueAsDate = new Date();
-    </script>
+        generatePDF();
+    });
+
+    // Debounced auto-save to reduce storage writes
+    let autoSaveTimeout = null;
+    function debouncedSave() {
+        if (autoSaveTimeout) {
+            clearTimeout(autoSaveTimeout);
+        }
+        autoSaveTimeout = setTimeout(() => {
+            try {
+                saveToLocalStorage();
+            } catch (e) {
+                // Silently fail on auto-save storage errors
+                console.warn('Auto-save failed due to storage limits');
+            }
+        }, 2000); // Save 2 seconds after last change
+    }
+
+    // Auto-save
+    document.addEventListener('input', function(e) {
+        if (e.target.classList.contains('notes-area')) {
+            debouncedSave();
+        }
+    });
+
+    ['inspectionType', 'inspectionLocation', 'inspectionDate', 'carMake', 'carModel', 'registrationPlate'].forEach(id => {
+        document.getElementById(id).addEventListener('input', debouncedSave);
+    });
+    
+    // Add auto-save for additional notes textarea
+    document.getElementById('additionalNotesText').addEventListener('input', debouncedSave);
+
+    // Initialize
+    initializeForm();
+    document.getElementById('inspectionDate').valueAsDate = new Date();
+    
+    // Check storage usage on load
+    setTimeout(() => checkStorageUsage(), 500);
+</script>
+```
+
 </body>
 </html>
