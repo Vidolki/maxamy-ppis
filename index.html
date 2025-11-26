@@ -924,58 +924,64 @@
         let generatedPDFBlob = null;
         let generatedPDFFilename = '';
 
-        // INSPECTION DATA - Same as before
+        // ========================================================================
+        // CORRECTED INSPECTION DATA - MATCHES YOUR WORD DOCUMENTS
+        // ========================================================================
         const inspectionData = {
             "Interior Compartment": {
                 items: [
+                    // ALL 20 items from Basic document
                     { name: "Door locking", level: ["basic", "standard", "premium"] },
                     { name: "Boot/tailgate lock", level: ["basic", "standard", "premium"] },
-                    { name: "Door seals", level: ["standard", "premium"] },
-                    { name: "Door hinges", level: ["standard", "premium"] },
-                    { name: "Door trim panels", level: ["standard", "premium"] },
-                    { name: "Dash panel condition", level: ["standard", "premium"] },
-                    { name: "Interior sills", level: ["standard", "premium"] },
+                    { name: "Door seals", level: ["basic", "standard", "premium"] },
+                    { name: "Door hinges", level: ["basic", "standard", "premium"] },
+                    { name: "Door trim panels", level: ["basic", "standard", "premium"] },
+                    { name: "Dash panel condition", level: ["basic", "standard", "premium"] },
+                    { name: "Interior sills", level: ["basic", "standard", "premium"] },
                     { name: "Illuminating lights", level: ["basic", "standard", "premium"] },
-                    { name: "Seat upholstery", level: ["standard", "premium"] },
-                    { name: "Seat mechanism (front seats)", level: ["standard", "premium"] },
-                    { name: "Steering wheel adjustment", level: ["standard", "premium"] },
+                    { name: "Seat upholstery", level: ["basic", "standard", "premium"] },
+                    { name: "Seat mechanism (front seats)", level: ["basic", "standard", "premium"] },
+                    { name: "Steering wheel adjustment", level: ["basic", "standard", "premium"] },
                     { name: "Rear view mirror condition", level: ["basic", "standard", "premium"] },
-                    { name: "Cigarette lighter", level: ["standard", "premium"] },
-                    { name: "Headlining", level: ["standard", "premium"] },
-                    { name: "Visors", level: ["standard", "premium"] },
-                    { name: "Carpets", level: ["standard", "premium"] },
-                    { name: "Sunroof condition", level: ["standard", "premium"] },
-                    { name: "Rear parcel shelf", level: ["standard", "premium"] },
-                    { name: "Rear luggage area condition", level: ["standard", "premium"] },
-                    { name: "Tool kit", level: ["standard", "premium"] },
+                    { name: "Cigarette lighter", level: ["basic", "standard", "premium"] },
+                    { name: "Headlining", level: ["basic", "standard", "premium"] },
+                    { name: "Visors", level: ["basic", "standard", "premium"] },
+                    { name: "Carpets", level: ["basic", "standard", "premium"] },
+                    { name: "Sunroof condition", level: ["basic", "standard", "premium"] },
+                    { name: "Rear parcel shelf", level: ["basic", "standard", "premium"] },
+                    { name: "Rear luggage area condition", level: ["basic", "standard", "premium"] },
+                    { name: "Tool kit", level: ["basic", "standard", "premium"] },
+                    // Standard/Premium only
                     { name: "Charging ports", level: ["standard", "premium"] },
-                    { name: "Seat belts", level: ["basic", "standard", "premium"] }
+                    { name: "Seat belts", level: ["standard", "premium"] }
                 ]
             },
             "Electrical / Controls": {
                 items: [
+                    // ALL electrical items from Basic document
                     { name: "Headlights", level: ["basic", "standard", "premium"] },
                     { name: "Side light/running lights", level: ["basic", "standard", "premium"] },
                     { name: "Indicators/hazard lights", level: ["basic", "standard", "premium"] },
                     { name: "Rear lights/number plate lights", level: ["basic", "standard", "premium"] },
                     { name: "Stop lights", level: ["basic", "standard", "premium"] },
                     { name: "Reverse/fog lights", level: ["basic", "standard", "premium"] },
-                    { name: "Auxiliary lights", level: ["standard", "premium"] },
-                    { name: "Panel lights", level: ["standard", "premium"] },
-                    { name: "Switches/controls (Condition & Operation)", level: ["standard", "premium"] },
+                    { name: "Auxiliary lights", level: ["basic", "standard", "premium"] },
+                    { name: "Panel lights", level: ["basic", "standard", "premium"] },
+                    { name: "Switches/controls (Condition & Operation)", level: ["basic", "standard", "premium"] },
                     { name: "Instrument/controls function", level: ["basic", "standard", "premium"] },
                     { name: "Horn", level: ["basic", "standard", "premium"] },
-                    { name: "Windows/sunroof operation", level: ["standard", "premium"] },
+                    { name: "Windows/sunroof operation", level: ["basic", "standard", "premium"] },
                     { name: "Front windscreen wipers", level: ["basic", "standard", "premium"] },
                     { name: "Front windscreen washers", level: ["basic", "standard", "premium"] },
-                    { name: "Rear wiper", level: ["standard", "premium"] },
-                    { name: "Rear washer", level: ["standard", "premium"] },
-                    { name: "Headlamp washer", level: ["standard", "premium"] },
-                    { name: "Headlamp wiper", level: ["standard", "premium"] },
-                    { name: "Electric/manual mirrors operation", level: ["standard", "premium"] },
-                    { name: "CD/Radio operation", level: ["standard", "premium"] },
-                    { name: "Interior lights", level: ["standard", "premium"] },
-                    { name: "Battery voltage", level: ["basic", "standard", "premium"] },
+                    { name: "Rear wiper", level: ["basic", "standard", "premium"] },
+                    { name: "Rear washer", level: ["basic", "standard", "premium"] },
+                    { name: "Headlamp washer", level: ["basic", "standard", "premium"] },
+                    { name: "Headlamp wiper", level: ["basic", "standard", "premium"] },
+                    { name: "Electric/manual mirrors operation", level: ["basic", "standard", "premium"] },
+                    { name: "CD/Radio operation", level: ["basic", "standard", "premium"] },
+                    { name: "Interior lights", level: ["basic", "standard", "premium"] },
+                    // Standard/Premium only
+                    { name: "Battery voltage", level: ["standard", "premium"] },
                     { name: "Climate control/heater fan controls", level: ["standard", "premium"] },
                     { name: "Screens (info/entertainment)", level: ["standard", "premium"] },
                     { name: "Key Fobs", level: ["standard", "premium"] },
@@ -985,34 +991,36 @@
             },
             "Road Test": {
                 items: [
-                    { name: "Driving test (up to 5 miles)", level: ["standard", "premium"] },
+                    // ALL road test items from Basic document
+                    { name: "Driving test (up to 5 miles)", level: ["basic", "standard", "premium"] },
                     { name: "Starting system/ignition lock", level: ["basic", "standard", "premium"] },
                     { name: "Warning lights", level: ["basic", "standard", "premium"] },
-                    { name: "Cold starting", level: ["standard", "premium"] },
-                    { name: "Fast idle (cold)", level: ["standard", "premium"] },
-                    { name: "Noise level (cold)", level: ["standard", "premium"] },
+                    { name: "Cold starting", level: ["basic", "standard", "premium"] },
+                    { name: "Fast idle (cold)", level: ["basic", "standard", "premium"] },
+                    { name: "Noise level (cold)", level: ["basic", "standard", "premium"] },
                     { name: "Excess fumes/smoke", level: ["basic", "standard", "premium"] },
-                    { name: "Engine – noise level", level: ["basic", "premium"] },
-                    { name: "Engine – general performance", level: ["basic", "premium"] },
+                    { name: "Engine – noise level", level: ["basic", "standard", "premium"] },
+                    { name: "Engine – general performance", level: ["basic", "standard", "premium"] },
                     { name: "Overheating evidence", level: ["basic", "standard", "premium"] },
-                    { name: "Turbo/super charger operation & noise", level: ["standard", "premium"] },
-                    { name: "Battery charging system", level: ["standard", "premium"] },
+                    { name: "Turbo/super charger operation & noise", level: ["basic", "standard", "premium"] },
+                    { name: "Battery charging system", level: ["basic", "standard", "premium"] },
                     { name: "Hand/parking brake operation", level: ["basic", "standard", "premium"] },
                     { name: "Footbrake operation", level: ["basic", "standard", "premium"] },
-                    { name: "Gearbox operation/noise level", level: ["standard", "premium"] },
-                    { name: "Clutch operation", level: ["standard", "premium"] },
+                    { name: "Gearbox operation/noise level", level: ["basic", "standard", "premium"] },
+                    { name: "Clutch operation", level: ["basic", "standard", "premium"] },
                     { name: "Accelerator Pedal Operation", level: ["basic", "standard", "premium"] },
-                    { name: "Instrument/controls function", level: ["standard", "premium"] },
+                    { name: "Instrument/controls function", level: ["basic", "standard", "premium"] },
                     { name: "General steering/handling", level: ["basic", "standard", "premium"] },
-                    { name: "Road holding/stability", level: ["standard", "premium"] },
+                    { name: "Road holding/stability", level: ["basic", "standard", "premium"] },
                     { name: "Suspension noise", level: ["basic", "standard", "premium"] },
-                    { name: "Cruise control", level: ["standard", "premium"] },
+                    { name: "Cruise control", level: ["basic", "standard", "premium"] },
                     { name: "Steering wheel alignment", level: ["basic", "standard", "premium"] },
-                    { name: "Steering effort", level: ["standard", "premium"] },
-                    { name: "Four wheel drive operation", level: ["standard", "premium"] },
-                    { name: "Suspension ride height level operation", level: ["standard", "premium"] },
-                    { name: "Air con operation", level: ["standard", "premium"] },
-                    { name: "Final drive operation/noise level", level: ["standard", "premium"] },
+                    { name: "Steering effort", level: ["basic", "standard", "premium"] },
+                    { name: "Four wheel drive operation", level: ["basic", "standard", "premium"] },
+                    { name: "Suspension ride height level operation", level: ["basic", "standard", "premium"] },
+                    { name: "Air con operation", level: ["basic", "standard", "premium"] },
+                    { name: "Final drive operation/noise level", level: ["basic", "standard", "premium"] },
+                    // Standard/Premium only
                     { name: "Hot restarting", level: ["standard", "premium"] },
                     { name: "Cooling fan operation", level: ["standard", "premium"] },
                     { name: "Stop-start system", level: ["standard", "premium"] },
@@ -1022,72 +1030,78 @@
             },
             "Engine Compartment": {
                 items: [
+                    // Basic items
                     { name: "Bonnet catch", level: ["basic", "standard", "premium"] },
-                    { name: "Bonnet hinges", level: ["standard", "premium"] },
-                    { name: "General cleanliness of engine bay", level: ["standard", "premium"] },
-                    { name: "Coolant/antifreeze level", level: ["basic", "standard", "premium"] },
-                    { name: "Coolant leaks", level: ["basic", "standard", "premium"] },
-                    { name: "Radiator/expansion bottle cap", level: ["premium"] },
+                    { name: "Bonnet hinges", level: ["basic", "standard", "premium"] },
+                    { name: "General cleanliness of engine bay", level: ["basic", "standard", "premium"] },
+                    // Standard/Premium items
+                    { name: "Coolant/antifreeze level", level: ["standard", "premium"] },
+                    { name: "Coolant leaks", level: ["standard", "premium"] },
+                    { name: "Radiator/expansion bottle cap", level: ["standard", "premium"] },
                     { name: "Hoses/pipes", level: ["standard", "premium"] },
-                    { name: "Engine oil level", level: ["basic", "standard", "premium"] },
-                    { name: "Drive belts (visible damage)", level: ["basic", "standard", "premium"] },
+                    { name: "Engine oil level", level: ["standard", "premium"] },
+                    { name: "Drive belts (visible damage)", level: ["standard", "premium"] },
                     { name: "Water pump operation", level: ["premium"] },
-                    { name: "Power steering fluid level", level: ["basic", "standard", "premium"] },
+                    { name: "Power steering fluid level", level: ["standard", "premium"] },
                     { name: "Clutch fluid level", level: ["standard", "premium"] },
-                    { name: "Brake fluid level", level: ["basic", "standard", "premium"] },
+                    { name: "Brake fluid level", level: ["standard", "premium"] },
                     { name: "Engine mountings", level: ["standard", "premium"] },
                     { name: "Fuel Injection Leak Off Pipe Condition (if visible)", level: ["premium"] },
-                    { name: "External leaks", level: ["basic", "standard", "premium"] },
+                    { name: "External leaks", level: ["standard", "premium"] },
                     { name: "Accelerator links", level: ["premium"] },
                     { name: "Fuel pump/pipes", level: ["premium"] }
                 ]
             },
             "Wheels & Tyres": {
                 items: [
+                    // ALL from Basic document
                     { name: "Front right tyre", level: ["basic", "standard", "premium"] },
                     { name: "Front left tyre", level: ["basic", "standard", "premium"] },
                     { name: "Rear right tyre", level: ["basic", "standard", "premium"] },
                     { name: "Rear left tyre", level: ["basic", "standard", "premium"] },
                     { name: "Uneven tyre wear", level: ["basic", "standard", "premium"] },
-                    { name: "Spare wheel condition", level: ["standard", "premium"] },
-                    { name: "Locking wheel nut key", level: ["standard", "premium"] },
-                    { name: "Wheel rims", level: ["standard", "premium"] },
-                    { name: "Wheel trims", level: ["standard", "premium"] },
+                    { name: "Spare wheel condition", level: ["basic", "standard", "premium"] },
+                    { name: "Locking wheel nut key", level: ["basic", "standard", "premium"] },
+                    { name: "Wheel rims", level: ["basic", "standard", "premium"] },
+                    { name: "Wheel trims", level: ["basic", "standard", "premium"] },
+                    // Standard/Premium only
                     { name: "Alloy wheel condition (if applicable)", level: ["standard", "premium"] },
                     { name: "Tyre inflation kit", level: ["standard", "premium"] }
                 ]
             },
             "Bodywork & Exterior": {
                 items: [
+                    // Basic items
                     { name: "Glass", level: ["basic", "standard", "premium"] },
                     { name: "Door locks/operation", level: ["basic", "standard", "premium"] },
                     { name: "Fuel filler cover/petrol cap", level: ["basic", "standard", "premium"] },
                     { name: "Body damage", level: ["basic", "standard", "premium"] },
                     { name: "Windshield (condition)", level: ["basic", "standard", "premium"] },
+                    // Standard/Premium only
                     { name: "Past repairs evident", level: ["standard", "premium"] },
-                    { name: "Corrosion", level: ["basic", "standard", "premium"] },
+                    { name: "Corrosion", level: ["standard", "premium"] },
                     { name: "Paint work", level: ["standard", "premium"] },
                     { name: "Mud flaps", level: ["standard", "premium"] },
-                    { name: "Bumper", level: ["basic", "standard", "premium"] },
-                    { name: "Number plate", level: ["basic", "standard", "premium"] },
+                    { name: "Bumper", level: ["standard", "premium"] },
+                    { name: "Number plate", level: ["standard", "premium"] },
                     { name: "Panel condition", level: ["standard", "premium"] }
                 ]
             },
             "Front Suspension, Brakes & Steering": {
                 items: [
                     { name: "Wheels hubs/bearings", level: ["standard", "premium"] },
-                    { name: "Brake pads (visual check)", level: ["basic", "standard", "premium"] },
-                    { name: "Brake discs (visual check)", level: ["basic", "standard", "premium"] },
-                    { name: "Brake pipes/hoses (where visible)", level: ["basic", "standard", "premium"] },
+                    { name: "Brake pads (visual check)", level: ["standard", "premium"] },
+                    { name: "Brake discs (visual check)", level: ["standard", "premium"] },
+                    { name: "Brake pipes/hoses (where visible)", level: ["standard", "premium"] },
                     { name: "Road springs", level: ["standard", "premium"] },
-                    { name: "Shock absorbers (condition/leaks)", level: ["basic", "standard", "premium"] },
+                    { name: "Shock absorbers (condition/leaks)", level: ["standard", "premium"] },
                     { name: "Bump stops/gaiters", level: ["standard", "premium"] },
                     { name: "Suspension arms/mountings", level: ["premium"] },
                     { name: "Suspension arms/fixings", level: ["premium"] },
                     { name: "Tie bars/anti roll bars", level: ["premium"] },
                     { name: "Location rod/fixings", level: ["premium"] },
                     { name: "Bushes", level: ["premium"] },
-                    { name: "Steering joints/ball joints", level: ["basic", "standard", "premium"] },
+                    { name: "Steering joints/ball joints", level: ["standard", "premium"] },
                     { name: "Steering rack", level: ["standard", "premium"] },
                     { name: "Power steering", level: ["standard", "premium"] }
                 ]
@@ -1095,11 +1109,11 @@
             "Rear Suspension & Brakes": {
                 items: [
                     { name: "Wheels hubs/bearings", level: ["standard", "premium"] },
-                    { name: "Brake pads (visual check)", level: ["basic", "standard", "premium"] },
-                    { name: "Brake discs (visual check)", level: ["basic", "standard", "premium"] },
-                    { name: "Brake pipes/hoses (if visible)", level: ["basic", "standard", "premium"] },
+                    { name: "Brake pads (visual check)", level: ["standard", "premium"] },
+                    { name: "Brake discs (visual check)", level: ["standard", "premium"] },
+                    { name: "Brake pipes/hoses (if visible)", level: ["standard", "premium"] },
                     { name: "Road springs", level: ["standard", "premium"] },
-                    { name: "Shock absorbers (condition/leaks)", level: ["basic", "standard", "premium"] },
+                    { name: "Shock absorbers (condition/leaks)", level: ["standard", "premium"] },
                     { name: "Bump stops/gaiters", level: ["standard", "premium"] },
                     { name: "Suspension arms/mountings", level: ["premium"] },
                     { name: "Suspension arms/fixings", level: ["premium"] },
@@ -1138,24 +1152,24 @@
                 items: [
                     { name: "Chassis members", level: ["premium"] },
                     { name: "Sub frames/mountings", level: ["premium"] },
-                    { name: "Corrosion – floor/chassis", level: ["basic", "premium"] },
+                    { name: "Corrosion – floor/chassis", level: ["premium"] },
                     { name: "Corrosion protection", level: ["premium"] },
-                    { name: "Engine underside leakage", level: ["basic", "premium"] }
+                    { name: "Engine underside leakage", level: ["premium"] }
                 ]
             },
             "Fuel System": {
                 items: [
                     { name: "Tank fixings", level: ["premium"] },
-                    { name: "Fuel lines", level: ["basic", "premium"] },
+                    { name: "Fuel lines", level: ["premium"] },
                     { name: "Breather pipes", level: ["premium"] },
-                    { name: "Evidence of leaks", level: ["basic", "premium"] },
+                    { name: "Evidence of leaks", level: ["premium"] },
                     { name: "Fuel tank (if accessible)", level: ["premium"] }
                 ]
             },
             "Exhaust System": {
                 items: [
-                    { name: "Operation", level: ["basic", "premium"] },
-                    { name: "System condition", level: ["basic", "premium"] },
+                    { name: "Operation", level: ["premium"] },
+                    { name: "System condition", level: ["premium"] },
                     { name: "Exhaust manifold (condition)", level: ["premium"] },
                     { name: "Exhaust pipes (condition)", level: ["premium"] },
                     { name: "Catalytic converter (condition)", level: ["premium"] },
@@ -1173,8 +1187,6 @@
 
         let formData = {};
         let currentInspectionType = '';
-
-        // [Rest of the JavaScript continues exactly as before...]
 
         function initializeForm() {
             const sectionsContainer = document.getElementById('inspectionSections');
@@ -1352,7 +1364,7 @@
             });
         }
 
-        // Compress image before storing - More aggressive compression for more images
+        // Compress image before storing
         function compressImage(base64Str, maxWidth = 800, quality = 0.5) {
             return new Promise((resolve) => {
                 const img = new Image();
@@ -1361,7 +1373,6 @@
                     let width = img.width;
                     let height = img.height;
                     
-                    // Calculate new dimensions
                     if (width > maxWidth || height > maxWidth) {
                         if (width > height) {
                             height = (height * maxWidth) / width;
@@ -1376,15 +1387,12 @@
                     canvas.height = height;
                     
                     const ctx = canvas.getContext('2d');
-                    // Improve image quality during resize
                     ctx.imageSmoothingEnabled = true;
                     ctx.imageSmoothingQuality = 'high';
                     ctx.drawImage(img, 0, 0, width, height);
                     
-                    // Convert to compressed JPEG with lower quality for smaller files
                     const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
                     
-                    // Log compression ratio for debugging
                     console.log(`Image compressed: ${(base64Str.length / 1024).toFixed(1)}KB → ${(compressedBase64.length / 1024).toFixed(1)}KB`);
                     
                     resolve(compressedBase64);
@@ -1397,15 +1405,13 @@
             const files = event.target.files;
             const previewContainer = document.getElementById(`preview_${itemId}`);
             
-            // Show helpful message on first upload
             const isFirstUpload = Object.values(formData).every(item => !item.images || item.images.length === 0);
             if (isFirstUpload && files.length > 0) {
                 showToast('📸 Images are compressed to 800px for optimal storage', 3000);
             }
             
             for (const file of Array.from(files)) {
-                // Check file size
-                if (file.size > 10 * 1024 * 1024) { // 10MB
+                if (file.size > 10 * 1024 * 1024) {
                     showToast('⚠️ Image too large (max 10MB). Skipping.');
                     continue;
                 }
@@ -1413,7 +1419,6 @@
                 const reader = new FileReader();
                 reader.onload = async function(e) {
                     try {
-                        // Compress image
                         const compressed = await compressImage(e.target.result);
                         formData[itemId].images.push(compressed);
                         
@@ -1425,18 +1430,16 @@
                         `;
                         previewContainer.appendChild(imgDiv);
                         
-                        // Try to save, catch quota errors
                         try {
                             saveToLocalStorage();
-                            checkStorageUsage(); // Update storage indicator
+                            checkStorageUsage();
                         } catch (storageError) {
                             if (storageError.name === 'QuotaExceededError') {
-                                // Remove the image we just added
                                 formData[itemId].images.pop();
                                 previewContainer.removeChild(previewContainer.lastChild);
                                 showToast('⚠️ Storage full! Please generate PDF or remove some photos.', 5000);
                                 alert('⚠️ Browser Storage Full!\n\nYou have too many photos. Please:\n\n1. Generate and download the PDF now (recommended), or\n2. Remove some earlier photos\n\nYour inspection data is still safe in memory.');
-                                return; // Stop processing this file
+                                return;
                             }
                         }
                     } catch (err) {
@@ -1466,7 +1469,7 @@
             });
             
             saveToLocalStorage();
-            checkStorageUsage(); // Update storage indicator
+            checkStorageUsage();
         }
 
         function updateProgress() {
@@ -1511,9 +1514,8 @@
             } catch (e) {
                 if (e.name === 'QuotaExceededError') {
                     console.error('Storage quota exceeded:', e);
-                    // Show error to user
                     alert('⚠️ Storage Limit Reached!\n\nYou have too many photos saved. Please:\n1. Generate and download the PDF now, or\n2. Remove some photos, or\n3. Use CSV export (without images)\n\nYour current data is still in memory but won\'t auto-save.');
-                    throw e; // Re-throw so calling code can handle it
+                    throw e;
                 } else {
                     console.error('Storage error:', e);
                 }
@@ -1521,10 +1523,8 @@
         }
 
         function loadSavedData() {
-            // Check if last inspection was completed
             const inspectionCompleted = localStorage.getItem('maxamyInspectionCompleted');
             if (inspectionCompleted === 'true') {
-                // Clear everything and start fresh
                 localStorage.removeItem('maxamyInspectionBasicInfo');
                 localStorage.removeItem('maxamyInspectionFormData');
                 localStorage.removeItem('maxamyInspectionCompleted');
@@ -1537,7 +1537,6 @@
             if (savedBasicInfo) {
                 const basicInfo = JSON.parse(savedBasicInfo);
                 
-                // Show indicator that we're loading saved data
                 if (basicInfo.plate || basicInfo.make) {
                     showToast('📂 Loaded saved inspection data');
                 }
@@ -1549,14 +1548,12 @@
                 document.getElementById('carModel').value = basicInfo.model || '';
                 document.getElementById('registrationPlate').value = basicInfo.plate || '';
                 
-                // Restore additional notes
                 if (basicInfo.additionalNotesEnabled) {
                     document.getElementById('additionalNotesCheckbox').checked = true;
                     document.getElementById('additionalNotesText').disabled = false;
                     document.getElementById('additionalNotesText').value = basicInfo.additionalNotes || '';
                 }
                 
-                // Store the plate for change detection
                 lastSavedPlate = basicInfo.plate || '';
                 
                 if (basicInfo.inspectionType) {
@@ -1619,22 +1616,19 @@
             }
         }
 
-        // Monitor storage usage with UI update
         function checkStorageUsage() {
             try {
                 const basicInfo = localStorage.getItem('maxamyInspectionBasicInfo');
                 const formDataStr = localStorage.getItem('maxamyInspectionFormData');
                 const totalSize = (basicInfo?.length || 0) + (formDataStr?.length || 0);
                 
-                // Count total images
                 let imageCount = 0;
                 Object.values(formData).forEach(item => {
                     if (item.images) imageCount += item.images.length;
                 });
                 
-                // localStorage limit is typically 5-10MB (5-10 million characters)
                 const estimatedMB = totalSize / (1024 * 1024);
-                const limitMB = 5; // Conservative estimate
+                const limitMB = 5;
                 const percentUsed = (estimatedMB / limitMB) * 100;
                 
                 const indicator = document.getElementById('storageIndicator');
@@ -1644,19 +1638,16 @@
                     indicator.classList.add('show');
                     
                     if (percentUsed > 90) {
-                        // Critical - over 90%
                         indicator.className = 'storage-indicator show critical';
                         storageText.textContent = `${imageCount} photos - Storage ${percentUsed.toFixed(0)}% full!`;
                         console.error(`Storage critical: ${estimatedMB.toFixed(2)}MB used (${imageCount} photos)`);
                         return 'critical';
                     } else if (percentUsed > 70) {
-                        // Warning - over 70%
                         indicator.className = 'storage-indicator show warning';
                         storageText.textContent = `${imageCount} photos - ${percentUsed.toFixed(0)}% full`;
                         console.warn(`Storage warning: ${estimatedMB.toFixed(2)}MB used (${imageCount} photos)`);
                         return 'warning';
                     } else {
-                        // OK
                         indicator.className = 'storage-indicator show';
                         storageText.textContent = `${imageCount} photo${imageCount !== 1 ? 's' : ''}`;
                         return 'ok';
@@ -1672,7 +1663,6 @@
             }
         }
 
-        // Start New Inspection
         function toggleAdditionalNotes() {
             const checkbox = document.getElementById('additionalNotesCheckbox');
             const textarea = document.getElementById('additionalNotesText');
@@ -1685,16 +1675,12 @@
 
         function startNewInspection() {
             if (confirm('Are you sure you want to start a new inspection? All current data will be cleared.')) {
-                // Clear localStorage
                 localStorage.removeItem('maxamyInspectionBasicInfo');
                 localStorage.removeItem('maxamyInspectionFormData');
-                
-                // Reload page
                 location.reload();
             }
         }
 
-        // Detect when registration plate changes
         let lastSavedPlate = '';
         document.getElementById('registrationPlate').addEventListener('blur', function() {
             const currentPlate = this.value.trim().toUpperCase();
@@ -1712,7 +1698,6 @@
             }
         });
 
-        // FIXED PDF GENERATION - Now includes actual images!
         async function generatePDF() {
             if (!currentInspectionType) {
                 alert('Please select an inspection type first.');
@@ -1720,7 +1705,6 @@
             }
 
             try {
-                // Try to save but don't fail if storage is full
                 try {
                     saveToLocalStorage();
                 } catch (storageError) {
@@ -1732,7 +1716,6 @@
 
                 await new Promise(resolve => setTimeout(resolve, 500));
 
-                // Check if jsPDF is available
                 if (typeof window.jspdf === 'undefined') {
                     throw new Error('PDF library not loaded. Please refresh the page.');
                 }
@@ -1802,7 +1785,6 @@
 
                     if (sectionItems.length === 0) continue;
 
-                    // Check if new page needed for section header
                     if (yPos > pageHeight - 30) {
                         doc.addPage();
                         yPos = 20;
@@ -1819,26 +1801,22 @@
                     doc.setTextColor(0, 0, 0);
 
                     for (const item of sectionItems) {
-                        // Calculate space needed
                         let itemHeight = 12;
                         if (item.notes) {
                             const noteLines = doc.splitTextToSize(`Notes: ${item.notes}`, maxWidth - 8);
                             itemHeight += noteLines.length * 4;
                         }
                         
-                        // Check if new page needed
                         if (yPos + itemHeight > pageHeight - margin) {
                             doc.addPage();
                             yPos = 20;
                         }
 
-                        // Item name
                         doc.setFontSize(9);
                         doc.setFont('helvetica', 'bold');
                         doc.text(item.item, margin + 2, yPos);
                         yPos += 5;
 
-                        // Condition with color
                         doc.setFont('helvetica', 'normal');
                         let conditionColor = [107, 114, 128];
                         if (item.condition === 'Excellent') conditionColor = [16, 185, 129];
@@ -1851,7 +1829,6 @@
                         doc.setTextColor(0, 0, 0);
                         yPos += 5;
 
-                        // Notes
                         if (item.notes) {
                             doc.setFontSize(8);
                             const noteLines = doc.splitTextToSize(`Notes: ${item.notes}`, maxWidth - 8);
@@ -1859,7 +1836,6 @@
                             yPos += (noteLines.length * 4);
                         }
 
-                        // Add actual images to PDF
                         if (item.images && item.images.length > 0) {
                             doc.setFontSize(8);
                             doc.setTextColor(250, 135, 0);
@@ -1873,7 +1849,6 @@
                                 const imgData = item.images[i];
 
                                 try {
-                                    // Detect image format from base64 data
                                     let imgFormat = 'JPEG';
                                     if (imgData.includes('data:image/png')) {
                                         imgFormat = 'PNG';
@@ -1883,18 +1858,15 @@
                                         imgFormat = 'WEBP';
                                     }
 
-                                    // Get actual image dimensions
                                     const img = new Image();
                                     img.src = imgData;
                                     
-                                    // Calculate scaled dimensions maintaining aspect ratio
-                                    const maxPDFWidth = 160; // Max width in PDF (leaving margins)
-                                    const maxPDFHeight = 120; // Max height to fit reasonably
+                                    const maxPDFWidth = 160;
+                                    const maxPDFHeight = 120;
                                     
-                                    let pdfWidth = img.width * 0.264583; // Convert px to mm (96 DPI)
+                                    let pdfWidth = img.width * 0.264583;
                                     let pdfHeight = img.height * 0.264583;
                                     
-                                    // Scale down if needed while maintaining aspect ratio
                                     if (pdfWidth > maxPDFWidth) {
                                         pdfHeight = (pdfHeight * maxPDFWidth) / pdfWidth;
                                         pdfWidth = maxPDFWidth;
@@ -1904,20 +1876,16 @@
                                         pdfHeight = maxPDFHeight;
                                     }
                                     
-                                    // Check if we need a new page for the image
                                     if (yPos + pdfHeight + 10 > pageHeight - margin) {
                                         doc.addPage();
                                         yPos = 20;
                                     }
 
-                                    // Add border
                                     doc.setDrawColor(220, 220, 220);
                                     doc.rect(margin + 3, yPos - 2, pdfWidth + 4, pdfHeight + 4);
                                     
-                                    // Add image with original aspect ratio
                                     doc.addImage(imgData, imgFormat, margin + 5, yPos, pdfWidth, pdfHeight);
                                     
-                                    // Add image caption
                                     doc.setFontSize(7);
                                     doc.setTextColor(120, 120, 120);
                                     doc.text(`Photo ${i + 1}/${item.images.length}`, margin + 5, yPos + pdfHeight + 6);
@@ -1945,18 +1913,16 @@
                     yPos += 3;
                 }
 
-                // Add Additional Notes if enabled
+                // Additional Notes
                 const additionalNotesCheckbox = document.getElementById('additionalNotesCheckbox');
                 const additionalNotesText = document.getElementById('additionalNotesText');
                 
                 if (additionalNotesCheckbox.checked && additionalNotesText.value.trim()) {
-                    // Check if we need a new page
                     if (yPos + 30 > pageHeight - margin) {
                         doc.addPage();
                         yPos = 20;
                     }
                     
-                    // Add section header
                     yPos += 8;
                     doc.setFillColor(250, 135, 0);
                     doc.rect(margin, yPos, pageWidth - 2 * margin, 8, 'F');
@@ -1966,7 +1932,6 @@
                     doc.text('ADDITIONAL NOTES', margin + 3, yPos + 5.5);
                     yPos += 12;
                     
-                    // Add notes content
                     doc.setFontSize(9);
                     doc.setFont('helvetica', 'normal');
                     doc.setTextColor(0, 0, 0);
@@ -1984,7 +1949,7 @@
                     yPos += 5;
                 }
 
-                // Footer on all pages
+                // Footer
                 const pageCount = doc.internal.getNumberOfPages();
                 for (let i = 1; i <= pageCount; i++) {
                     doc.setPage(i);
@@ -1994,15 +1959,12 @@
                     doc.text('Maxamy Mobile Autocare | www.maxamy-autocare.co.uk', 105, pageHeight - 6, { align: 'center' });
                 }
 
-                // Save PDF
                 const filename = `Maxamy_${basicInfo.inspectionType}_${basicInfo.plate}_${basicInfo.date}.pdf`;
                 const pdfBlob = doc.output('blob');
                 
-                // Store globally for download
                 generatedPDFBlob = pdfBlob;
                 generatedPDFFilename = filename;
 
-                // Create preview text
                 let previewText = `Vehicle: ${basicInfo.make} ${basicInfo.model}\n`;
                 previewText += `Registration: ${basicInfo.plate}\n`;
                 previewText += `Inspection Type: ${basicInfo.inspectionType.toUpperCase()}\n`;
@@ -2039,7 +2001,6 @@
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
 
-            // Mark inspection as completed
             localStorage.setItem('maxamyInspectionCompleted', 'true');
 
             showToast('✓ PDF downloaded successfully! Starting fresh on next visit.', 4000);
@@ -2083,7 +2044,6 @@
             generatePDF();
         });
 
-        // Debounced auto-save to reduce storage writes
         let autoSaveTimeout = null;
         function debouncedSave() {
             if (autoSaveTimeout) {
@@ -2093,13 +2053,11 @@
                 try {
                     saveToLocalStorage();
                 } catch (e) {
-                    // Silently fail on auto-save storage errors
                     console.warn('Auto-save failed due to storage limits');
                 }
-            }, 2000); // Save 2 seconds after last change
+            }, 2000);
         }
 
-        // Auto-save
         document.addEventListener('input', function(e) {
             if (e.target.classList.contains('notes-area')) {
                 debouncedSave();
@@ -2110,14 +2068,12 @@
             document.getElementById(id).addEventListener('input', debouncedSave);
         });
         
-        // Add auto-save for additional notes textarea
         document.getElementById('additionalNotesText').addEventListener('input', debouncedSave);
 
         // Initialize
         initializeForm();
         document.getElementById('inspectionDate').valueAsDate = new Date();
         
-        // Check storage usage on load
         setTimeout(() => checkStorageUsage(), 500);
     </script>
 </body>
