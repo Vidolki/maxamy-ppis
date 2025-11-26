@@ -282,7 +282,7 @@
         .item-name {
             font-weight: 600;
             color: #2a2a2a;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-size: 14px;
         }
 
@@ -290,7 +290,7 @@
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 7px;
-            margin-bottom: 13px;
+            margin-bottom: 10px;
         }
 
         .condition-btn {
@@ -349,7 +349,7 @@
         .notes-area {
             width: 100%;
             min-height: 65px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             resize: vertical;
             border-radius: 6px;
             border: 1px solid #d4d4d4;
@@ -366,7 +366,7 @@
         }
 
         .image-upload-section {
-            margin-top: 13px;
+            margin-top: 10px;
         }
 
         .upload-btn {
@@ -396,9 +396,9 @@
 
         .image-preview {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
-            gap: 10px;
-            margin-top: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
         }
 
         .image-preview-item {
@@ -1218,7 +1218,7 @@
                         <textarea class="notes-area" placeholder="Add notes (optional)..." id="notes_${itemId}"></textarea>
                         <div class="image-upload-section">
                             <label class="upload-btn">
-                                <input type="file" accept="image/*" multiple class="hidden" onchange="handleImageUpload(event, '${itemId}')" capture="environment">
+                                <input type="file" accept="image/*" multiple class="hidden" onchange="handleImageUpload(event, '${itemId}')">
                                 Add Photos
                             </label>
                             <div class="image-preview" id="preview_${itemId}"></div>
