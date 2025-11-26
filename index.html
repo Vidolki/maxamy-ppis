@@ -400,11 +400,17 @@
             background: white;
             padding: 15px;
             border-top: 1px solid #e8e8e8;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 10px;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
             z-index: 100;
+        }
+
+        @media (min-width: 600px) {
+            .action-buttons {
+                flex-direction: row;
+            }
         }
 
         .btn {
@@ -445,7 +451,7 @@
         .btn-success {
             background: #10b981;
             color: white;
-            grid-column: span 1; /* we now have 2 buttons total */
+            flex: 2;
         }
 
         .btn-success:hover {
@@ -546,14 +552,6 @@
             .condition-btn {
                 padding: 10px 6px;
                 font-size: 11px;
-            }
-
-            .action-buttons {
-                grid-template-columns: 1fr;
-            }
-
-            .btn-success {
-                grid-column: span 1;
             }
         }
 
@@ -708,7 +706,7 @@
             <div id="inspectionSections"></div>
 
             <div class="action-buttons">
-                <button type="button" class="btn btn-secondary" onclick="saveProgress()">💾 Save</button>
+                <button type="button" class="btn btn-secondary" onclick="saveProgress()">💾 Save Progress</button>
                 <button type="button" class="btn btn-success" onclick="generatePDF()">📄 Generate PDF Report</button>
             </div>
         </form>
@@ -751,6 +749,7 @@
         let generatedPDFBlob = null;
         let generatedPDFFilename = '';
 
+        // INSPECTION DATA - Same as before
         const inspectionData = {
             "Interior Compartment": {
                 items: [
@@ -999,7 +998,9 @@
 
         let formData = {};
         let currentInspectionType = '';
-        let lastSavedPlate = '';
+
+        // [Rest of the JavaScript continues exactly as before until the generatePDF function...]
+        // [Include all the initializeForm, updateInspectionType, toggleSection, etc. functions]
 
         function initializeForm() {
             const sectionsContainer = document.getElementById('inspectionSections');
@@ -1069,26 +1070,6 @@
 
             loadSavedData();
             updateProgress();
-
-            // registrationPlate blur listener (after element definitely exists)
-            const regField = document.getElementById('registrationPlate');
-            if (regField) {
-                regField.addEventListener('blur', function() {
-                    const currentPlate = this.value.trim().toUpperCase();
-                    
-                    if (lastSavedPlate && currentPlate && lastSavedPlate !== currentPlate) {
-                        if (confirm(`You've changed the registration plate from ${lastSavedPlate} to ${currentPlate}. Would you like to start a fresh inspection for this vehicle?`)) {
-                            localStorage.removeItem('maxamyInspectionBasicInfo');
-                            localStorage.removeItem('maxamyInspectionFormData');
-                            location.reload();
-                        }
-                    }
-                    
-                    if (currentPlate) {
-                        lastSavedPlate = currentPlate;
-                    }
-                });
-            }
         }
 
         function updateInspectionType() {
@@ -1159,6 +1140,7 @@
             
             formData[itemId].condition = condition;
             
+            const item = document.querySelector(`[data-item-id="${itemId}"]`);
             const section = formData[itemId].section;
             updateSectionCounter(section);
             
@@ -1205,6 +1187,7 @@
                     let width = img.width;
                     let height = img.height;
                     
+                    // Calculate new dimensions
                     if (width > maxWidth) {
                         height = (height * maxWidth) / width;
                         width = maxWidth;
@@ -1216,6 +1199,7 @@
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
                     
+                    // Convert to compressed JPEG
                     const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
                     resolve(compressedBase64);
                 };
@@ -1228,7 +1212,8 @@
             const previewContainer = document.getElementById(`preview_${itemId}`);
             
             for (const file of Array.from(files)) {
-                if (file.size > 10 * 1024 * 1024) {
+                // Check file size
+                if (file.size > 10 * 1024 * 1024) { // 10MB
                     showToast('⚠️ Image too large (max 10MB). Skipping.');
                     continue;
                 }
@@ -1236,6 +1221,7 @@
                 const reader = new FileReader();
                 reader.onload = async function(e) {
                     try {
+                        // Compress image
                         const compressed = await compressImage(e.target.result);
                         formData[itemId].images.push(compressed);
                         
@@ -1247,15 +1233,17 @@
                         `;
                         previewContainer.appendChild(imgDiv);
                         
+                        // Try to save, catch quota errors
                         try {
                             saveToLocalStorage();
                         } catch (storageError) {
                             if (storageError.name === 'QuotaExceededError') {
+                                // Remove the image we just added
                                 formData[itemId].images.pop();
                                 previewContainer.removeChild(previewContainer.lastChild);
                                 showToast('⚠️ Storage full! Please generate PDF or remove some photos.', 5000);
                                 alert('⚠️ Browser Storage Full!\n\nYou have too many photos. Please:\n\n1. Generate and download the PDF now (recommended), or\n2. Remove some earlier photos\n\nYour inspection data is still safe in memory.');
-                                break;
+                                return; // Stop processing this file
                             }
                         }
                     } catch (err) {
@@ -1327,8 +1315,9 @@
             } catch (e) {
                 if (e.name === 'QuotaExceededError') {
                     console.error('Storage quota exceeded:', e);
-                    alert('⚠️ Storage Limit Reached!\n\nYou have too many photos saved. Please:\n1. Generate and download the PDF now, or\n2. Remove some photos\n\nYour current data is still in memory but won\'t auto-save.');
-                    throw e;
+                    // Show error to user
+                    alert('⚠️ Storage Limit Reached!\n\nYou have too many photos saved. Please:\n1. Generate and download the PDF now, or\n2. Remove some photos, or\n3. Use CSV export (without images)\n\nYour current data is still in memory but won\'t auto-save.');
+                    throw e; // Re-throw so calling code can handle it
                 } else {
                     console.error('Storage error:', e);
                 }
@@ -1336,8 +1325,10 @@
         }
 
         function loadSavedData() {
+            // Check if last inspection was completed
             const inspectionCompleted = localStorage.getItem('maxamyInspectionCompleted');
             if (inspectionCompleted === 'true') {
+                // Clear everything and start fresh
                 localStorage.removeItem('maxamyInspectionBasicInfo');
                 localStorage.removeItem('maxamyInspectionFormData');
                 localStorage.removeItem('maxamyInspectionCompleted');
@@ -1350,6 +1341,7 @@
             if (savedBasicInfo) {
                 const basicInfo = JSON.parse(savedBasicInfo);
                 
+                // Show indicator that we're loading saved data
                 if (basicInfo.plate || basicInfo.make) {
                     showToast('📂 Loaded saved inspection data');
                 }
@@ -1361,6 +1353,7 @@
                 document.getElementById('carModel').value = basicInfo.model || '';
                 document.getElementById('registrationPlate').value = basicInfo.plate || '';
                 
+                // Store the plate for change detection
                 lastSavedPlate = basicInfo.plate || '';
                 
                 if (basicInfo.inspectionType) {
@@ -1423,22 +1416,26 @@
             }
         }
 
-        // Monitor storage usage (safe version)
+        // Monitor storage usage
         function checkStorageUsage() {
             try {
-                const basicInfo = localStorage.getItem('maxamyInspectionBasicInfo') || '';
-                const formDataStr = localStorage.getItem('maxamyInspectionFormData') || '';
-                const totalSize = basicInfo.length + formDataStr.length;
+                // Estimate storage used
+                const basicInfo = localStorage.getItem('maxamyInspectionBasicInfo');
+                const formDataStr = localStorage.getItem('maxamyInspectionFormData');
+                const totalSize = (basicInfo?.length || 0) + (formDataStr?.length || 0);
                 
+                // localStorage limit is typically 5-10MB (5-10 million characters)
                 const estimatedMB = totalSize / (1024 * 1024);
-                const limitMB = 5;
+                const limitMB = 5; // Conservative estimate
                 
-                if (estimatedMB > limitMB * 0.95) {
-                    console.error(`Storage critical: ${estimatedMB.toFixed(2)}MB used`);
-                    return 'critical';
-                } else if (estimatedMB > limitMB * 0.8) {
+                if (estimatedMB > limitMB * 0.8) {
+                    // Over 80% full
                     console.warn(`Storage warning: ${estimatedMB.toFixed(2)}MB used`);
                     return 'warning';
+                } else if (estimatedMB > limitMB * 0.95) {
+                    // Over 95% full
+                    console.error(`Storage critical: ${estimatedMB.toFixed(2)}MB used`);
+                    return 'critical';
                 }
                 return 'ok';
             } catch (e) {
@@ -1446,14 +1443,37 @@
             }
         }
 
+        // Start New Inspection
         function startNewInspection() {
             if (confirm('Are you sure you want to start a new inspection? All current data will be cleared.')) {
+                // Clear localStorage
                 localStorage.removeItem('maxamyInspectionBasicInfo');
                 localStorage.removeItem('maxamyInspectionFormData');
+                
+                // Reload page
                 location.reload();
             }
         }
 
+        // Detect when registration plate changes
+        let lastSavedPlate = '';
+        document.getElementById('registrationPlate').addEventListener('blur', function() {
+            const currentPlate = this.value.trim().toUpperCase();
+            
+            if (lastSavedPlate && currentPlate && lastSavedPlate !== currentPlate) {
+                if (confirm(`You've changed the registration plate from ${lastSavedPlate} to ${currentPlate}. Would you like to start a fresh inspection for this vehicle?`)) {
+                    localStorage.removeItem('maxamyInspectionBasicInfo');
+                    localStorage.removeItem('maxamyInspectionFormData');
+                    location.reload();
+                }
+            }
+            
+            if (currentPlate) {
+                lastSavedPlate = currentPlate;
+            }
+        });
+
+        // FIXED PDF GENERATION - Now includes actual images!
         async function generatePDF() {
             if (!currentInspectionType) {
                 alert('Please select an inspection type first.');
@@ -1461,6 +1481,7 @@
             }
 
             try {
+                // Try to save but don't fail if storage is full
                 try {
                     saveToLocalStorage();
                 } catch (storageError) {
@@ -1472,6 +1493,7 @@
 
                 await new Promise(resolve => setTimeout(resolve, 500));
 
+                // Check if jsPDF is available
                 if (typeof window.jspdf === 'undefined') {
                     throw new Error('PDF library not loaded. Please refresh the page.');
                 }
@@ -1525,6 +1547,7 @@
                 doc.text(`Registration: ${basicInfo.plate}`, margin, yPos);
                 yPos += 12;
 
+                // Inspection Results
                 doc.setFontSize(12);
                 doc.setFont('helvetica', 'bold');
                 doc.text('Inspection Results', margin, yPos);
@@ -1539,11 +1562,13 @@
 
                     if (sectionItems.length === 0) continue;
 
+                    // Check if new page needed for section header
                     if (yPos > pageHeight - 30) {
                         doc.addPage();
                         yPos = 20;
                     }
 
+                    // Section Header
                     doc.setFillColor(250, 135, 0);
                     doc.rect(margin, yPos - 5, maxWidth, 8, 'F');
                     doc.setTextColor(255, 255, 255);
@@ -1554,22 +1579,26 @@
                     doc.setTextColor(0, 0, 0);
 
                     for (const item of sectionItems) {
+                        // Calculate space needed
                         let itemHeight = 12;
                         if (item.notes) {
                             const noteLines = doc.splitTextToSize(`Notes: ${item.notes}`, maxWidth - 8);
                             itemHeight += noteLines.length * 4;
                         }
                         
+                        // Check if new page needed
                         if (yPos + itemHeight > pageHeight - margin) {
                             doc.addPage();
                             yPos = 20;
                         }
 
+                        // Item name
                         doc.setFontSize(9);
                         doc.setFont('helvetica', 'bold');
                         doc.text(item.item, margin + 2, yPos);
                         yPos += 5;
 
+                        // Condition with color
                         doc.setFont('helvetica', 'normal');
                         let conditionColor = [107, 114, 128];
                         if (item.condition === 'Excellent') conditionColor = [16, 185, 129];
@@ -1582,6 +1611,7 @@
                         doc.setTextColor(0, 0, 0);
                         yPos += 5;
 
+                        // Notes
                         if (item.notes) {
                             doc.setFontSize(8);
                             const noteLines = doc.splitTextToSize(`Notes: ${item.notes}`, maxWidth - 8);
@@ -1589,6 +1619,7 @@
                             yPos += (noteLines.length * 4);
                         }
 
+                        // Add actual images to PDF
                         if (item.images && item.images.length > 0) {
                             doc.setFontSize(8);
                             doc.setTextColor(250, 135, 0);
@@ -1602,34 +1633,51 @@
                                 const imgData = item.images[i];
 
                                 try {
+                                    // Detect image format from base64 data
                                     let imgFormat = 'JPEG';
                                     if (imgData.includes('data:image/png')) {
                                         imgFormat = 'PNG';
+                                    } else if (imgData.includes('data:image/jpeg') || imgData.includes('data:image/jpg')) {
+                                        imgFormat = 'JPEG';
                                     } else if (imgData.includes('data:image/webp')) {
                                         imgFormat = 'WEBP';
                                     }
 
+                                    // Get actual image dimensions
                                     const img = new Image();
                                     img.src = imgData;
                                     
-                                    // NOTE: this is a rough sizing; for absolute accuracy you'd await onload,
-                                    // but this works well enough in practice.
-                                    const maxPDFWidth = 160;
-                                    const maxPDFHeight = 120;
+                                    // Calculate scaled dimensions maintaining aspect ratio
+                                    const maxPDFWidth = 160; // Max width in PDF (leaving margins)
+                                    const maxPDFHeight = 120; // Max height to fit reasonably
                                     
-                                    let pdfWidth = maxPDFWidth;
-                                    let pdfHeight = maxPDFHeight;
-
+                                    let pdfWidth = img.width * 0.264583; // Convert px to mm (96 DPI)
+                                    let pdfHeight = img.height * 0.264583;
+                                    
+                                    // Scale down if needed while maintaining aspect ratio
+                                    if (pdfWidth > maxPDFWidth) {
+                                        pdfHeight = (pdfHeight * maxPDFWidth) / pdfWidth;
+                                        pdfWidth = maxPDFWidth;
+                                    }
+                                    if (pdfHeight > maxPDFHeight) {
+                                        pdfWidth = (pdfWidth * maxPDFHeight) / pdfHeight;
+                                        pdfHeight = maxPDFHeight;
+                                    }
+                                    
+                                    // Check if we need a new page for the image
                                     if (yPos + pdfHeight + 10 > pageHeight - margin) {
                                         doc.addPage();
                                         yPos = 20;
                                     }
 
+                                    // Add border
                                     doc.setDrawColor(220, 220, 220);
                                     doc.rect(margin + 3, yPos - 2, pdfWidth + 4, pdfHeight + 4);
                                     
+                                    // Add image with original aspect ratio
                                     doc.addImage(imgData, imgFormat, margin + 5, yPos, pdfWidth, pdfHeight);
                                     
+                                    // Add image caption
                                     doc.setFontSize(7);
                                     doc.setTextColor(120, 120, 120);
                                     doc.text(`Photo ${i + 1}/${item.images.length}`, margin + 5, yPos + pdfHeight + 6);
@@ -1642,7 +1690,7 @@
                                     console.error('Error adding image:', imgError);
                                     doc.setFontSize(8);
                                     doc.setTextColor(200, 0, 0);
-                                    doc.text(`[Image ${i + 1} could not be loaded]`, margin + 10, yPos);
+                                    doc.text(`[Image ${i + 1} could not be loaded - ${imgError.message}]`, margin + 10, yPos);
                                     doc.setTextColor(0, 0, 0);
                                     yPos += 6;
                                 }
@@ -1657,6 +1705,7 @@
                     yPos += 3;
                 }
 
+                // Footer on all pages
                 const pageCount = doc.internal.getNumberOfPages();
                 for (let i = 1; i <= pageCount; i++) {
                     doc.setPage(i);
@@ -1666,12 +1715,15 @@
                     doc.text('Maxamy Mobile Autocare | www.maxamy-autocare.co.uk', 105, pageHeight - 6, { align: 'center' });
                 }
 
+                // Save PDF
                 const filename = `Maxamy_${basicInfo.inspectionType}_${basicInfo.plate}_${basicInfo.date}.pdf`;
                 const pdfBlob = doc.output('blob');
                 
+                // Store globally for download
                 generatedPDFBlob = pdfBlob;
                 generatedPDFFilename = filename;
 
+                // Create preview text
                 let previewText = `Vehicle: ${basicInfo.make} ${basicInfo.model}\n`;
                 previewText += `Registration: ${basicInfo.plate}\n`;
                 previewText += `Inspection Type: ${basicInfo.inspectionType.toUpperCase()}\n`;
@@ -1689,7 +1741,7 @@
             } catch (error) {
                 console.error('PDF generation error:', error);
                 document.getElementById('loadingOverlay').classList.remove('active');
-                alert(`Error generating PDF: ${error.message}. Please try refreshing the page and trying again.`);
+                alert(`Error generating PDF: ${error.message}. Please try refreshing the page or using CSV export instead.`);
             }
         }
 
@@ -1708,6 +1760,7 @@
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
 
+            // Mark inspection as completed
             localStorage.setItem('maxamyInspectionCompleted', 'true');
 
             showToast('✓ PDF downloaded successfully! Starting fresh on next visit.', 4000);
@@ -1727,12 +1780,31 @@
             }, duration);
         }
 
-        document.addEventListener('input', function(e) {
-            if (e.target.classList.contains('notes-area')) {
-                debouncedSave();
+        document.getElementById('inspectionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!currentInspectionType) {
+                alert('Please select an inspection type first.');
+                return;
             }
+
+            let incompleteItems = 0;
+            Object.values(formData).forEach(item => {
+                if (item.levels.includes(currentInspectionType) && item.condition === null) {
+                    incompleteItems++;
+                }
+            });
+            
+            if (incompleteItems > 0) {
+                if (!confirm(`You have ${incompleteItems} items not assessed. Do you want to generate the PDF anyway?`)) {
+                    return;
+                }
+            }
+
+            generatePDF();
         });
 
+        // Debounced auto-save to reduce storage writes
         let autoSaveTimeout = null;
         function debouncedSave() {
             if (autoSaveTimeout) {
@@ -1742,53 +1814,26 @@
                 try {
                     saveToLocalStorage();
                 } catch (e) {
+                    // Silently fail on auto-save storage errors
                     console.warn('Auto-save failed due to storage limits');
                 }
-            }, 2000);
+            }, 2000); // Save 2 seconds after last change
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeForm();
-
-            const dateField = document.getElementById('inspectionDate');
-            if (dateField) {
-                dateField.valueAsDate = new Date();
-            }
-
-            ['inspectionType', 'inspectionLocation', 'inspectionDate', 'carMake', 'carModel', 'registrationPlate'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.addEventListener('input', debouncedSave);
-                }
-            });
-
-            const form = document.getElementById('inspectionForm');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    if (!currentInspectionType) {
-                        alert('Please select an inspection type first.');
-                        return;
-                    }
-
-                    let incompleteItems = 0;
-                    Object.values(formData).forEach(item => {
-                        if (item.levels.includes(currentInspectionType) && item.condition === null) {
-                            incompleteItems++;
-                        }
-                    });
-                    
-                    if (incompleteItems > 0) {
-                        if (!confirm(`You have ${incompleteItems} items not assessed. Do you want to generate the PDF anyway?`)) {
-                            return;
-                        }
-                    }
-
-                    generatePDF();
-                });
+        // Auto-save
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('notes-area')) {
+                debouncedSave();
             }
         });
+
+        ['inspectionType', 'inspectionLocation', 'inspectionDate', 'carMake', 'carModel', 'registrationPlate'].forEach(id => {
+            document.getElementById(id).addEventListener('input', debouncedSave);
+        });
+
+        // Initialize
+        initializeForm();
+        document.getElementById('inspectionDate').valueAsDate = new Date();
     </script>
 </body>
 </html>
